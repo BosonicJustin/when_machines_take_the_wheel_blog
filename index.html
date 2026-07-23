@@ -502,7 +502,7 @@
         </div></div>
         <div class="problem"><span class="num">02</span><div>
           <h4>Finding efficient and safe ways to provide business context</h4>
-          <p>Non-parametric methods like prompt engineering and context filling are used to embed company judgement and meet company-specific quality requirements. They produce some improvement, but they rule out automating high-volume tasks with low value per execution, and highly context-specific multi-step tasks, where the added context search and filling makes automation uneconomical.</p>
+          <p>Prompt engineering and retrieval can inject business context at call time, but doing it well is its own engineering program: getting to the data, enforcing access controls on what each request may see, building retrieval that surfaces the right evidence, and <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">managing a context window</a> that models <a href="https://arxiv.org/abs/2307.03172">use unevenly as it grows</a>. Every call pays that tax again, which makes high-volume tasks with low value per execution uneconomical to automate.</p>
         </div></div>
         <div class="problem"><span class="num">03</span><div>
           <h4>Knowing whether your solutions actually bring gains</h4>
