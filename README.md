@@ -17,7 +17,7 @@ Light theme is the default; the "theme" button in the top bar toggles dark.
 ## Editing notes
 
 - Everything lives in `index.html`: CSS at the top, article HTML in the middle, chart-drawing JavaScript at the bottom (`<script>` block). Custom charts (divide, plateau, prompt tax, reward payoffs, bankruptcy, break-even, training curve) are plain data arrays in that script — edit numbers there.
-- The five matplotlib figures (GRPO diagram, model ladder, mechanism, cost scatter) are base64-embedded SVGs generated from `ecommerce_env/benchmarks/figures/`. To update one, regenerate it there and re-embed.
+- The embedded matplotlib figures (training-loop diagram, model ladder, cost scatter) are base64-encoded SVGs. Sources live in `figures/`: edit the matching `make_*.py`, regenerate (`python3 figures/make_<name>.py`), then re-embed the SVG into `index.html`.
 - Writing rules live in `.claude/skills/article-writing/SKILL.md` and load automatically in Claude Code sessions inside this repo. Highlights: no em dashes, no numbers in headlines, scope every claim, zero self-praise adjectives.
 
 ## Before publication (open items)
