@@ -94,7 +94,7 @@
 
   /* ---------- layout ---------- */
   .col { max-width: 680px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
-  .wide { max-width: 960px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 24px); }
+  .wide { max-width: 800px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 24px); }
 
   /* ---------- hero ---------- */
   header.hero { padding: clamp(48px, 9vh, 96px) 0 8px; text-align: center; }
@@ -241,12 +241,12 @@
   /* svg series classes */
   .s-hero { fill: var(--accent); }
   .s-frontier { fill: var(--teal); }
-  .axis-text { fill: var(--mute); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; }
-  .row-label { fill: var(--ink-2); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; }
-  .val-label { fill: var(--ink); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11.5px; font-weight: 600; }
+  .axis-text { fill: var(--mute); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; }
+  .row-label { fill: var(--ink-2); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13.5px; }
+  .val-label { fill: var(--ink); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; font-weight: 600; }
   .grid-line { stroke: var(--grid); stroke-width: 1; }
   .ceiling-line { stroke: var(--mute); stroke-width: 1.2; stroke-dasharray: 5 4; }
-  .annot { fill: var(--mute); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; }
+  .annot { fill: var(--mute); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; }
   .mark { cursor: default; }
   .mark:hover { opacity: .85; }
 
@@ -1450,7 +1450,7 @@
     if (!host) return;
     var rows = [
       ["Frontier API, ~30M calls/day", 500, "frontier", "\u2248 $500M / yr"],
-      ["Fine-tuned specialist, same volume", 10, "hero", "\u2248 $10M / yr"]
+      ["Fine-tuned specialist", 10, "hero", "\u2248 $10M / yr"]
     ];
     var W = 880, rowH = 56, top = 24, L = 280, R = 790, max = 520;
     var H = top + rows.length * rowH + 42;
