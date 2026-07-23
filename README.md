@@ -23,7 +23,7 @@ Light theme is the default; the "theme" button in the top bar toggles dark.
 ## Before publication (open items)
 
 - [x] Footnote 1: Ramp revenue-divide data — sourced to Eric Glyman's X post
-- [ ] Footnote 2: Uber budget / Microsoft licenses — link pending, verify
+- [x] Footnote 2: Uber (Fortune) and Microsoft (BuildMVPFast) sourced
 - [ ] Footnote 4: Ramp spreadsheet agent — single-source, verify primary
 - [x] Training curves are real W&B evals (raw exports in data/)
 - [ ] Confirm the $50k build-cost assumption in the break-even chart
