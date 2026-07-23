@@ -669,18 +669,19 @@
     <section id="case-study">
       <p class="kicker">Part III</p>
       <h2>Case Study: Catalogue Integrity Agent</h2>
-      <div class="stat-row">
-    <div class="stat"><b>+15%</b><span>our fine-tuned 9B open source model reviews e-commerce product listings more accurately than the best frontier model we tested</span></div>
-    <div class="stat"><b>40-340&times;</b><span>cheaper per listing when our fine-tuned model does the reviewing instead of a frontier API</span></div>
-  </div>
       <p>
         One of the central challenges of running an e-commerce platform is keeping the product
         catalog trustworthy. Every listing must land in the correct category of the platform's
         taxonomy, and the attributes that power search, filters, recommendations, and downstream
         operations must be accurately extracted from its images and description.
       </p>
+      <div class="stat-row">
+    <div class="stat"><b>+15%</b><span>our fine-tuned 9B open source model reviews e-commerce product listings more accurately than the best frontier model we tested</span></div>
+    <div class="stat"><b>40-340&times;</b><span>cheaper per listing when our fine-tuned model does the reviewing instead of a frontier API</span></div>
+  </div>
       <p>
-        This work is usually done by catalog-integrity analysts, and it scales badly. As the
+        This work is usually done by catalog-integrity analysts, and the number of people
+        scales with the catalogue size. As the
         catalog grows, so do the products, categories, attributes, and ambiguous edge cases.
         Inconsistent decisions propagate: products become harder to find, recommendations
         deteriorate, and policy violations slip through. Miss a counterfeit and you expose
