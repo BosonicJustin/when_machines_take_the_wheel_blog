@@ -25,7 +25,7 @@ Light theme is the default; the "theme" button in the top bar toggles dark.
 - [x] Footnote 1: Ramp revenue-divide data — sourced to Eric Glyman's X post
 - [ ] Footnote 2: Uber budget / Microsoft licenses — link pending, verify
 - [ ] Footnote 4: Ramp spreadsheet agent — single-source, verify primary
-- [ ] Replace schematic training curve with the real W&B export (marked in its caption)
+- [x] Training curves are real W&B evals (raw exports in data/)
 - [ ] Confirm the $50k build-cost assumption in the break-even chart
 - [ ] Replace the mailto CTA with a booking link (two places: top bar + CTA panel)
 - [ ] Decide "Catalogue" (Part IV heading) vs "catalog" (used everywhere else)

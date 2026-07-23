@@ -206,11 +206,7 @@
   /* ---------- figures ---------- */
   figure.viz {
     margin: 56px 0;
-    background: var(--card);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    padding: 22px 22px 14px;
+    padding: 0;
   }
   figure.viz .viz-title { font-size: 17px; font-weight: 600; margin: 0 0 2px; }
   figure.viz .viz-sub {
@@ -225,7 +221,7 @@
   }
   /* embedded matplotlib figures sit on a white plate in both themes */
   figure.viz .plate {
-    background: var(--plate); border-radius: 8px; padding: 6px; overflow: hidden;
+    background: var(--plate); border-radius: 6px; padding: 0; overflow: hidden;
   }
   figure.viz .plate img { display: block; width: 100%; height: auto; }
   /* crop the diagrams' internal titles + dead margins so each card has one title
@@ -486,7 +482,7 @@
     <figcaption>
       Same three years, same economy: the heaviest AI adopters more than doubled revenue while
       businesses spending nothing on AI grew about 15%<sup class="fn"><a href="#fn1">1</a></sup>.
-      The rest of this article is about what the left group actually did.
+      The rest of this article is about what the AI-heavy group actually did.
     </figcaption>
   </figure>
 </div>
@@ -1000,18 +996,20 @@
 
   <div class="wide">
     <figure class="viz reveal" id="fig-training">
-      <p class="viz-title">Training run: reward vs. step</p>
-      <p class="viz-sub">Qwen3.5-9B + LoRA · GRPO · training-eval monitor, native rendering path</p>
+      <p class="viz-title">Training runs: reward vs. step</p>
+      <p class="viz-sub">held-out eval every 25 steps, training monitor &middot; Qwen3.5 at three sizes, same environment and reward</p>
       <div class="legend">
-        <span class="l-hero"><i></i>trained 9B</span>
-        <span class="l-frontier"><i></i>frontier plateau band (0.50–0.545)</span>
+        <span class="l-hero"><i></i>9B + LoRA, 1,000 steps</span>
+        <span class="l-frontier"><i></i>4B + LoRA, 200 steps</span>
+        <span class="l-base-gray"><i></i>2B full fine-tune, 200 steps</span>
       </div>
       <div class="plot-wrap"><div id="training-chart"></div></div>
       <figcaption>
-        Marked points are measured evaluations (base 0.460 at step 0; 0.644 at step 525; ≈0.67 at
-        step 1000); the connecting curve is a schematic reconstruction of the monotonic W&amp;B
-        training curve; swap in the exported run before publication. The model crosses the entire
-        frontier band within the first few hundred steps.
+        Every point is a measured evaluation from the W&amp;B training monitor (two sampled
+        rollouts per episode). The 9B run climbs from roughly 0.50 to 0.671 at step 1,000,
+        clearing the frontier band before step 250; the 4B and 2B runs show the same shape one
+        tier down. The monitor's sampled decoding runs slightly above the strict benchmark
+        harness, where the final 9B adapter scores 0.626.
       </figcaption>
     </figure>
 
@@ -1300,37 +1298,46 @@
     txt(svg, L + 122, ly + 4, "+ workflow guide", "axis-text");
   })();
 
-  /* ---------- training curve ---------- */
+  /* ---------- training curves (real W&B evals) ---------- */
   (function () {
-    var pts = [[0, 0.460], [60, 0.514], [130, 0.552], [210, 0.582], [300, 0.606], [400, 0.626], [525, 0.644], [650, 0.654], [800, 0.662], [1000, 0.670]];
-    var measured = { 0: "base model, untrained", 525: "measured eval", 1000: "measured eval (final)" };
-    var W = 880, H = 330, L = 70, R = 840, T = 26, B = 288;
-    var lo = 0.42, hi = 0.72;
+    var host = document.getElementById("training-chart");
+    if (!host) return;
+    var s9 = [[1,0.5066],[25,0.4862],[50,0.5011],[75,0.5024],[100,0.5206],[125,0.5345],[150,0.542],[175,0.5499],[200,0.5636],[225,0.5842],[250,0.5864],[275,0.6099],[300,0.6162],[325,0.6201],[350,0.6309],[375,0.6272],[400,0.6252],[425,0.6341],[450,0.6369],[475,0.6438],[500,0.6428],[525,0.644],[550,0.6494],[575,0.6521],[600,0.6546],[625,0.6549],[650,0.6498],[675,0.6563],[700,0.6546],[725,0.66],[750,0.6609],[775,0.6536],[800,0.6564],[825,0.6569],[850,0.6614],[875,0.6596],[900,0.6623],[925,0.6672],[950,0.6669],[975,0.6616],[1000,0.6708]];
+    var s4 = [[1,0.4945],[25,0.4915],[50,0.4894],[75,0.4793],[100,0.4989],[125,0.5376],[150,0.5576],[175,0.5961],[200,0.6085]];
+    var s2 = [[1,0.174],[25,0.4095],[50,0.4352],[75,0.4377],[100,0.4528],[125,0.4603],[150,0.4622],[175,0.442],[200,0.5658]];
+    var W = 880, H = 340, L = 70, R = 830, T = 26, B = 292;
+    var lo = 0.15, hi = 0.73;
     var svg = el("svg", { viewBox: "0 0 " + W + " " + H, role: "img",
-      "aria-label": "Line chart of training reward versus step, rising from 0.46 to about 0.67 over 1000 steps, crossing the frontier plateau band early in training." });
-    document.getElementById("training-chart").appendChild(svg);
+      "aria-label": "Line chart of held-out eval reward versus training step for three Qwen model sizes. The 9B run rises from about 0.50 to 0.671 over 1000 steps, crossing the frontier plateau band before step 250. The 4B reaches 0.61 and the 2B 0.57 by step 200." });
+    host.appendChild(svg);
     function X(s) { return L + s / 1000 * (R - L); }
     function Y(v) { return B - (v - lo) / (hi - lo) * (B - T); }
-    [0.45, 0.50, 0.55, 0.60, 0.65, 0.70].forEach(function (v) {
+    [0.2, 0.3, 0.4, 0.5, 0.6, 0.7].forEach(function (v) {
       el("line", { x1: L, x2: R, y1: Y(v), y2: Y(v), "class": "grid-line" }, svg);
-      txt(svg, L - 10, Y(v) + 4, v.toFixed(2), "axis-text", "end");
+      txt(svg, L - 10, Y(v) + 4, v.toFixed(1), "axis-text", "end");
     });
     [0, 200, 400, 600, 800, 1000].forEach(function (s) {
-      txt(svg, X(s), B + 22, "step " + s, "axis-text", "middle");
+      txt(svg, X(s), B + 22, s === 0 ? "step 0" : String(s), "axis-text", s === 0 ? "start" : "middle");
     });
     el("rect", { x: L, y: Y(0.5445), width: R - L, height: Y(0.500) - Y(0.5445), fill: "var(--band)" }, svg);
-    txt(svg, R - 6, Y(0.5445) - 6, "frontier plateau 0.50–0.545", "annot", "end");
-    el("line", { x1: L, x2: R, y1: Y(CEIL), y2: Y(CEIL), "class": "ceiling-line" }, svg);
-    txt(svg, R - 6, Y(CEIL) - 7, "max achievable 0.717", "annot", "end");
-    var dPath = pts.map(function (p, i) { return (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1); }).join(" ");
-    el("path", { d: dPath, fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, "stroke-linecap": "round" }, svg);
-    pts.forEach(function (p) {
-      var isM = measured.hasOwnProperty(p[0]);
-      var c = el("circle", { cx: X(p[0]), cy: Y(p[1]), r: isM ? 6.5 : 3.5, "class": "s-hero mark", stroke: "var(--card)", "stroke-width": isM ? 2 : 1.5 }, svg);
-      bindTip(c, "<b>step " + p[0] + "</b><br>reward " + p[1].toFixed(3) + (isM ? "<br>" + measured[p[0]] : "<br>schematic point"));
-    });
-    txt(svg, X(525), Y(0.644) - 14, "0.644 @ step 525", "val-label", "middle");
-    txt(svg, X(1000) - 4, Y(0.670) - 14, "≈0.67", "val-label", "end");
+    txt(svg, R - 6, Y(0.5445) - 6, "frontier plateau 0.50\u20130.545", "annot", "end");
+    el("line", { x1: L, x2: R, y1: Y(0.717), y2: Y(0.717), "class": "ceiling-line" }, svg);
+    txt(svg, R - 6, Y(0.717) - 7, "max achievable 0.717", "annot", "end");
+    function draw(pts, color, wdt, label, dy) {
+      var d = pts.map(function (q, i) { return (i ? "L" : "M") + X(q[0]).toFixed(1) + " " + Y(q[1]).toFixed(1); }).join(" ");
+      el("path", { d: d, fill: "none", stroke: color, "stroke-width": wdt, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
+      pts.forEach(function (q) {
+        var c = el("circle", { cx: X(q[0]), cy: Y(q[1]), r: 3, fill: color, "class": "mark" }, svg);
+        bindTip(c, "<b>step " + q[0] + "</b><br>eval reward " + q[1].toFixed(3));
+      });
+      var last = pts[pts.length - 1];
+      el("circle", { cx: X(last[0]), cy: Y(last[1]), r: 6, fill: color, stroke: "var(--paper)", "stroke-width": 2 }, svg);
+      var t = txt(svg, X(last[0]) + (last[0] > 900 ? -8 : 10), Y(last[1]) + dy, label, "val-label", last[0] > 900 ? "end" : "start");
+      t.setAttribute("fill", color);
+    }
+    draw(s2, "var(--mute)", 2, "2B: 0.566 @ 200", 20);
+    draw(s4, "var(--teal)", 2, "4B: 0.609 @ 200", -12);
+    draw(s9, "var(--accent)", 2.5, "9B: 0.671 @ 1,000", -12);
   })();
 
   /* ---------- adoption divide ---------- */
@@ -1339,8 +1346,8 @@
     if (!host) return;
     var adopters = [[0, 100], [6, 112], [12, 129], [18, 148], [24, 168], [30, 188], [37, 205]];
     var zero =     [[0, 100], [6, 102], [12, 105], [18, 108], [24, 110], [30, 113], [37, 115]];
-    var W = 880, H = 340, L = 64, R = 830, T = 30, B = 292;
-    var lo = 90, hi = 215;
+    var W = 880, H = 320, L = 64, R = 830, T = 28, B = 272;
+    var lo = 96, hi = 212;
     var svg = el("svg", { viewBox: "0 0 " + W + " " + H, role: "img",
       "aria-label": "Line chart, November 2022 to December 2025: indexed revenue of top-quartile AI spenders rises from 100 to about 205, while businesses with zero AI spend rise to about 115." });
     host.appendChild(svg);
