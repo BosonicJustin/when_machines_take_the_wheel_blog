@@ -653,19 +653,16 @@
   <div class="col">
     <section id="ecommerce-lineage">
       <p>
-        One honest caveat before we go further, because it sharpens the claim rather than
-        weakening it: in nearly every case above, the baseline is a <em>prompted, un-tuned</em>
-        frontier model: nobody gets to fine-tune GPT-5.5's weights. The precise finding across
-        the corpus is that task-specific post-training beats <em>prompting</em> the frontier on
-        narrow, high-volume workflows. And the wins come in two economic shapes: quality wins
-        (Bridgewater, Harvey, Intercom: beat the frontier on the metric that matters) and parity
-        wins (LinkedIn, Instacart: match the frontier at 10–100× lower cost and latency). For
-        most businesses, the second is where the money is.
+        The pattern across these deployments is consistent: the winners used reinforcement
+        learning to push open-source models past the frontier on specific tasks, at a fixed
+        and dramatically lower cost per call. For each workflow, they typically started with
+        frontier models, prompt- and context-engineered, to establish the strongest default
+        baseline available. Then they reused those traces and learnings to pack the focused
+        capability into a compact model they own.
       </p>
       <p>
-        That's the pattern, with the receipts. To show precisely how it works, and to check the
-        claim rather than repeat it, we built one of these workflows end-to-end and put real
-        numbers on every step.
+        That is the playbook we set out to test: we built one of these workflows end to end
+        and measured every step.
       </p>
     </section>
 
