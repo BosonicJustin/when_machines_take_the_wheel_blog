@@ -128,7 +128,12 @@
   }
 
   /* ---------- hero stat cards ---------- */
-  .stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 30px auto 4px; max-width: 720px; }
+  .stat-kicker {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--mute); margin: 32px 0 0;
+  }
+  .stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 12px auto 4px; max-width: 720px; }
   @media (max-width: 640px) { .stat-row { grid-template-columns: 1fr; } }
   .stat {
     background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
@@ -431,6 +436,7 @@
   <p class="standfirst">
     Why the companies winning with AI own their intelligence.
   </p>
+  <p class="stat-kicker">Case study results &middot; we fine-tuned an open model on one e-commerce workflow</p>
   <div class="stat-row">
     <div class="stat"><b>+15%</b><span>our fine-tuned 9B open model reviews e-commerce product listings more accurately than the best frontier model we tested</span></div>
     <div class="stat"><b>40&ndash;340&times;</b><span>cheaper per listing when our fine-tuned model does the reviewing instead of a frontier API</span></div>
