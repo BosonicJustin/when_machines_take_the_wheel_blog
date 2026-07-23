@@ -186,19 +186,17 @@
   sup.fn a { font-family: ui-monospace, monospace; font-size: .62em; text-decoration: none; color: var(--mute); }
   sup.fn a:hover { color: var(--ink); }
 
-  /* ---------- challenge blocks ---------- */
-  .challenges { display: grid; gap: 14px; margin: 28px 0; }
-  .challenge {
-    background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
-    padding: 20px 22px; box-shadow: var(--shadow);
-  }
-  .challenge .tag {
+  /* ---------- the three problems ---------- */
+  .problems { display: grid; gap: 36px; margin: 32px 0; }
+  .problem { display: grid; grid-template-columns: 58px 1fr; gap: 18px; align-items: start; }
+  .problem .num {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--mute); display: block; margin-bottom: 6px;
+    font-size: 27px; font-weight: 700; line-height: 1.1;
+    color: var(--teal); padding-top: 2px;
   }
-  .challenge h4 { margin: 0 0 8px; font-size: 18.5px; }
-  .challenge p { margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
+  .problem h4 { margin: 0 0 8px; font-size: 19px; line-height: 1.3; }
+  .problem p { margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--ink-2); }
+  @media (max-width: 560px) { .problem { grid-template-columns: 38px 1fr; gap: 12px; } .problem .num { font-size: 21px; } }
 
   /* ---------- figures ---------- */
   figure.viz {
@@ -451,27 +449,27 @@
       <p class="kicker">Part I · How we got here</p>
       <h2>Everyone asked the same question</h2>
       <p class="lede">
-        Since ChatGPT launched in late 2022, business leaders have been asking one question:
-        <em>what can AI do for us?</em> The first answers were deliberately low-risk: summarize
-        this document, draft this email, produce a first version we'll edit. Anything wrong got
-        caught by the human still in the loop.
+        Since ChatGPT launched in 2022, business leaders have been asking the same question:
+        <em>what can AI do for us?</em> The answer began with low-risk tasks: summarizing
+        documents, drafting emails, producing first drafts that a human would edit.
       </p>
       <p>
-        It worked, so the ambition grew. AI moved into higher-value cognitive work: writing
-        production software, drafting designs, handling support conversations. By 2025 the most
-        ambitious teams were assembling what amounts to a company brain: systems connected to
-        internal knowledge, data, and tools that could coordinate work and, eventually, operate
-        parts of the business on their own.
+        It quickly moved into higher-value cognitive work, such as software development and
+        design, and grew into more ambitious projects: attempts to build an AI "company brain",
+        a system connected to internal knowledge, data, and tools that could coordinate work
+        and eventually operate parts of the business autonomously.
       </p>
       <p>
-        Almost every company now uses AI somewhere. Which makes the next fact strange: the
-        results could hardly be more unequal.
+        The gains from AI adoption, however, were not distributed equally. Some companies
+        embraced being AI-first and saw enormous gains in productivity, revenue, and cost,
+        while others lagged behind or failed to change their organizations enough to reach
+        high ROI.
       </p>
       <p>
-        Data from corporate expense platform Ramp puts numbers on the divide: among businesses on
-        its platform, the top quartile of AI spenders saw revenue more than double between
-        November 2022 and December 2025, while businesses with zero AI expenditure grew about
-        15%<sup class="fn"><a href="#fn1">1</a></sup>.
+        Recent data from corporate expense management platform Ramp reveals a stark contrast in
+        performance: the top quartile of companies investing in AI saw their revenue more than
+        double between November 2022 and December 2025, while businesses with zero AI
+        expenditure experienced a mere 15% increase<sup class="fn"><a href="#fn1">1</a></sup>.
       </p>
     </section>
   </div>
@@ -496,44 +494,29 @@
   <div class="col">
     <section id="mixed-results-2">
       <p>
-        Same models, same APIs, same four years. Why did some companies compound while others
-        stalled? Talk to the teams involved and read the post-mortems, and the failures keep
-        reducing to three problems:
+        There are many reasons why AI has done wonders for some companies and made life hard
+        for others, but it mostly comes down to three:
       </p>
 
-      <div class="challenges">
-        <div class="challenge">
-          <span class="tag">Problem 01 · Unit economics</span>
-          <h4>Costs that outrun the budget</h4>
-          <p>
-            Uber reportedly burned its annual engineering AI budget in four months; Microsoft
-            cancelled most of its Claude licenses to rein in spiralling spend<sup class="fn"><a href="#fn2">2</a></sup>.
-            Teams now triage which workflows justify which model sizes, but on many tasks the output
-            doesn't cover the token bill, and frontier prices are widely expected to rise as labs
-            stop subsidizing inference from their fundraising rounds.
-          </p>
-        </div>
-        <div class="challenge">
-          <span class="tag">Problem 02 · Judgment transfer</span>
-          <h4>Teaching the model how <em>your</em> company works</h4>
-          <p>
-            Prompt engineering and context-stuffing can embed company judgment: which tool is
-            authoritative, what counts as sufficient evidence, when to escalate. It helps, but it
-            caps out: for high-volume tasks with low value per call, or context-heavy multi-step
-            work, the extra retrieval and longer prompts make each call slower and more expensive,
-            often uneconomical to automate at all.
-          </p>
-        </div>
-        <div class="challenge">
-          <span class="tag">Problem 03 · Measurement</span>
-          <h4>Proving the gains exist</h4>
-          <p>
-            Most deployments can't answer the basic question: is the AI actually right, how often,
-            and at what cost per decision? Without a scored evaluation on your own data, "it seems
-            to work" is the ceiling of what you can claim, and the floor of what you can improve.
-          </p>
-        </div>
+      <div class="problems">
+        <div class="problem"><span class="num">01</span><div>
+          <h4>Achieving business goals within the AI budget</h4>
+          <p>Uber blew its annual engineering budget in four months; Microsoft cancelled most of its Claude licenses to rein in spiralling costs<sup class="fn"><a href="#fn2">2</a></sup>. Companies are trying to better triage which workflows need what sized models, but on some tasks the output doesn't justify the rising costs. And frontier model prices are expected to increase further, since the labs are heavily subsidizing token costs through their massive fundraising rounds.</p>
+        </div></div>
+        <div class="problem"><span class="num">02</span><div>
+          <h4>Informing models of the "right" way to execute procedures</h4>
+          <p>Non-parametric methods like prompt engineering and context filling are used to embed company judgement and meet company-specific quality requirements. They produce some improvement, but they rule out automating high-volume tasks with low value per execution, and highly context-specific multi-step tasks, where the added context search and filling makes automation uneconomical.</p>
+        </div></div>
+        <div class="problem"><span class="num">03</span><div>
+          <h4>Knowing whether your solutions actually bring gains</h4>
+          <p>Making sure your solutions are actually bringing you gains, and how much. Most deployments can't answer the basic question: is the AI right, how often, and at what cost per decision? Without a scored evaluation on your own data, "it seems to work" is the ceiling of what you can claim.</p>
+        </div></div>
       </div>
+      <p>
+        In this article we give a detailed overview of the AI deployment technique that the
+        companies winning with AI are rushing to adopt, fine-tuning open-source models via
+        reinforcement learning, and show how it tackles all three challenges above.
+      </p>
     </section>
 
     <section id="winners">
@@ -546,10 +529,13 @@
         and they measure everything against a score they trust.
       </p>
       <p>
-        The technique they've converged on is fine-tuning open-source models with reinforcement
-        learning. Instead of describing the job in an ever-longer prompt, you place a model inside
-        a simulated version of the workflow, let it act, score the outcomes, and train on the
-        scores. Company judgment moves out of the prompt and into the weights.
+        The winners' answer is refining open-source models through parametric fine-tuning:
+        distilling vast general intelligence into specialized performance. By embedding
+        organizational expertise directly into the model weights, companies bypass the
+        context-bloating that drives up frontier model expenses, and a dedicated specialist
+        can outmaneuver the largest labs at a fraction of the price. In practice you place a
+        model inside a simulated version of the workflow, let it act, score the outcomes, and
+        train on the scores.
       </p>
     </section>
   </div>
@@ -767,12 +753,30 @@
   <div class="col">
     <section id="case-study-3">
       <p>
-        We built an AI agent that performs this workflow. For each listing it examines the image
-        and text, searches a taxonomy of ~13,000 categories with <span class="mono">search_taxonomy</span>,
-        checks the brand registry with <span class="mono">lookup_brand</span>, retrieves the accepted
-        fields for its chosen category with <span class="mono">get_attribute_schema</span>, and then
-        commits three structured outputs: a category, extracted attributes, and a policy verdict.
-        When the evidence is thin or the risk is high, the case escalates to human review.
+        The companies actually running this workflow confirm the math.
+        <strong>Shopify</strong> classifies products with fine-tuned open vision-language models
+        at roughly 40&nbsp;million multimodal inferences a day, a volume it says commercial APIs
+        can't economically serve, and separately replaced a closed frontier model in its Flow
+        agent with a fine-tuned model that is
+        <a href="https://shopify.engineering/fine-tuning-agent-shopify-flow">2.2× faster and 68% cheaper</a><sup class="fn"><a href="#fn5">5</a></sup>.
+        <strong>Instacart's</strong> fine-tuned 8B query-understanding model
+        <a href="https://company.instacart.com/tech-innovation/building-the-intent-engine-how-instacart-is-revamping-query-understanding-with-llms">matches
+        frontier F1 (95.7 vs 95.8) at 300&nbsp;ms instead of 700</a>, and halved tail complaints.
+        <strong>DoorDash</strong> trained a menu-ingestion agent with RL against an automated
+        grader and <a href="https://appliedcompute.com/case-studies/doordash">cut critical menu
+        errors 30%</a>, now rolled out US-wide. <strong>Taobao</strong> runs GRPO-trained
+        retrieval in production search at China's largest marketplace; <strong>Amazon</strong>
+        built Rufus as a custom shopping model precisely because frontier APIs don't pencil at
+        its scale. And <strong>Ramp</strong>, the same company whose spending data opened this
+        article, built a custom spreadsheet-search agent that exceeded Claude Opus 4.6 with a
+        4% accuracy gain and 27% faster responses, at the pricing and speed of much smaller
+        models<sup class="fn"><a href="#fn4">4</a></sup>.
+      </p>
+      <p>
+        We built an AI agent to perform this workflow. The agent examines the listing, searches
+        the product taxonomy, checks brand information, retrieves the appropriate attribute
+        schema, and produces a structured decision. When the available evidence is insufficient
+        or the risk is too high, the case is escalated for human review.
       </p>
     </section>
   </div>
@@ -814,20 +818,19 @@
     <section id="why-fine-tune">
       <h3>Why fine-tune an open model for this?</h3>
       <p>
-        You could hire more analysts, but the cost grows with the catalog. You could write rules,
-        but maintaining thousands of rules across shifting categories becomes its own engineering
-        problem. You could call a frontier model per listing, but at ingestion scale the per-call
-        price and latency are the whole story, and the long instruction prompt rides along with
-        every single request.
+        One simple solution would be to hire human analysts to audit the catalog, but operating
+        costs grow with the catalog. Rules-based software is cheaper, but maintaining thousands
+        of rules across changing categories and products quickly becomes difficult. Calling a
+        frontier model per listing works, but at ingestion scale the per-call price and latency
+        are the whole story.
       </p>
       <p>
-        The workflow has every marker of the case where fine-tuning wins: it happens at high
-        volume; inputs and outputs are stable; decisions must be fast; correctness can be scored;
-        different mistakes carry different costs; the model must use company-specific tools and
-        schemas; and edge cases can route to humans, whose reviewed decisions become tomorrow's
-        training data. That is why Amazon, Walmart, eBay, and Shopify have all invested heavily in
-        custom catalog AI: at their scale, small gains in accuracy or cost per listing compound
-        into major business value.
+        Fine-tuning an open-source model turns that repeatable workflow into a specialist the
+        company controls. It requires an upfront investment, but delivers lower costs per
+        listing, faster decisions, more consistent behavior, and less dependence on an external
+        AI provider. That is why e-commerce giants such as Shopify, Amazon, Walmart, and eBay
+        have invested heavily in custom catalog AI: at larger scale, even small improvements in
+        accuracy or cost per listing compound into major business value.
       </p>
     </section>
 
@@ -837,18 +840,21 @@
       <p>
         We built the training environment from the
         <a href="https://amazon-berkeley-objects.s3.amazonaws.com/index.html">Amazon Berkeley Objects</a>
-        dataset of real product listings and images, generating <strong>177,767</strong>
-        catalog-review tasks. Each task is one listing. We also generated controlled policy cases
-        (swapped images, conflicting brand claims, and deliberately <em>legitimate</em> brand claims
-        as hard negatives) so every correct answer is known by construction and every decision can
-        be scored.
+        dataset, which contains real product images and listing information. From this data we
+        created <strong>177,767</strong> catalog-review tasks. Each task contains a product
+        image, title, description, claimed brand, and region. We also created controlled policy
+        cases, including mismatched images, conflicting brand claims, and deliberately
+        <em>legitimate</em> brand claims as hard negatives. Because these cases were generated
+        deliberately, we knew the correct answer and could measure the model's performance.
       </p>
       <p>
-        The score encodes business priorities directly: category placement earns hierarchical
-        partial credit, attributes are checked against evidence recoverable from the listing, and
-        the policy head is asymmetric: missing a real violation costs 7× more than a false alarm,
-        because that reflects the real-world cost structure. Unnecessary tool calls carry a small
-        penalty.
+        The model could use three company-like tools: search a taxonomy of approximately 13,000
+        categories, check whether a brand is registered and protected, and retrieve the
+        required attributes for a selected category. It then had to return the product
+        category, the extracted attributes, and a policy decision. The score rewarded correct
+        outputs and penalized missed violations, unsupported attributes, invalid categories,
+        and unnecessary tool calls: this let us encode business priorities directly into the
+        training process, with a missed violation costing 7× more than a false alarm.
       </p>
       <div class="formula">R = 0.3·category + 0.3·attributes + 0.4·policy − tool_overage</div>
     </section>
@@ -891,11 +897,11 @@
       </p>
       <h3>Then we gave the frontier its best shot</h3>
       <p>
-        Before training anything, we evaluated four frontier models (GPT-5.5, Gemini 3.1 Pro,
-        Claude Opus 4.8, and Claude Fable 5) on 200 stratified validation episodes with identical
-        tools, images, scorer, and turn budget. Then we tested each again with a carefully written
-        2,800-character workflow guide: extraction conventions, lookup procedure, three worked
-        examples, no benchmark answers.
+        Before training, we tested four frontier models (GPT-5.5, Gemini 3.1 Pro, Claude Opus
+        4.8, and Claude Fable 5) with and without a detailed workflow guide, on 200 stratified
+        validation episodes with identical tools, images, scorer, and turn budget. The guide
+        held 2,800 characters of extraction conventions, lookup procedure, and worked examples,
+        with no benchmark answers.
       </p>
     </section>
   </div>
@@ -958,9 +964,9 @@
         <strong>operating-procedure ceiling</strong>, not a capability ceiling.
       </p>
       <p>
-        Then we fine-tuned Qwen3.5-9B, an open model, with a lightweight LoRA adapter using GRPO,
-        letting it practice the workflow against the score. The setup, for those who want the
-        receipts:
+        We then fine-tuned a Qwen3.5-9B open-source model using a lightweight LoRA adapter and
+        the GRPO reinforcement-learning framework, letting it practice the workflow against
+        the score. The setup, for those who want the receipts:
       </p>
       <div class="spec">
         <div><b>Base model</b><span>Qwen3.5-9B, multimodal, vision encoder frozen; the model reads the actual product images</span></div>
@@ -1159,7 +1165,7 @@
     <section class="footnotes" id="footnotes">
       <p class="kicker" style="margin-top:0">Sources &amp; notes</p>
       <ol>
-        <li id="fn1">Ramp, AI spending &amp; business outcomes data, Nov 2022 – Dec 2025. <span class="pending">[link pending]</span></li>
+        <li id="fn1">Ramp AI-spend and revenue data, Nov 2022 – Dec 2025: <a href="https://x.com/eglyman/status/2036477278394138772">Ramp CEO Eric Glyman on X</a>, July 2026.</li>
         <li id="fn2">Uber engineering-budget and Microsoft license reports. <span class="pending">[link pending, verify before publication]</span></li>
         <li id="fn3">Thinking Machines Lab × Bridgewater AIA Labs, <a href="https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/">Learning to Replicate Expert Judgment in Financial Tasks</a>, June 2026.</li>
         <li id="fn4">Ramp spreadsheet-search agent, reported via Prime Intellect coverage, July 2026. <span class="pending">[single-source, verify primary before publication]</span></li>
