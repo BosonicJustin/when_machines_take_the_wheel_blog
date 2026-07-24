@@ -188,6 +188,11 @@
     font-size: clamp(21px, 2.7vw, 25px); line-height: 1.4;
     color: var(--ink); font-style: italic; text-wrap: balance;
   }
+  blockquote.pull.attrib { font-size: clamp(18px, 2.2vw, 20px); line-height: 1.5; }
+  blockquote.pull cite {
+    display: block; margin-top: 14px;
+    font-style: normal; font-size: 15px; color: var(--mute);
+  }
   sup.fn a { font-family: ui-monospace, monospace; font-size: .62em; text-decoration: none; color: var(--mute); }
   sup.fn a:hover { color: var(--ink); }
 
@@ -491,14 +496,13 @@
   <div class="col">
     <section id="mixed-results-2">
       <p>
-        There are many reasons why AI has done wonders for some companies and made life hard
-        for others, but it mostly comes down to three:
+        There are many reasons why AI has done wonders for some companies and others have struggled to see the return on their investment, but research primarily points into three directions.
       </p>
 
       <div class="problems">
         <div class="problem"><span class="num">01</span><div>
           <h4>Achieving business goals within the AI budget</h4>
-          <p>Uber blew its annual engineering budget in four months; Microsoft cancelled most of its Claude licenses to rein in spiralling costs<sup class="fn"><a href="#fn2">2</a></sup>. Companies triage which workflows need what sized models, but on some tasks the output doesn't justify the cost. Furthermore, it is expected for frontier model costs to rise even further, since most AI labs are currently <a href="https://www.wsj.com/tech/ai/ai-giants-are-handing-out-tons-of-free-computing-power-to-grab-startup-share-c00a5c5c">subsidizing the token costs to capture market share</a>.</p>
+          <p>AI brought a pricing model most companies were not used to. Paying per token instead of per seat makes costs scale with usage, which makes it hard to lay out a cost plan or estimate the capital efficiency gains for internal workloads. Uber went through its annual engineering budget in four months, and Microsoft cancelled most of its Claude licenses to bring costs back under control<sup class="fn"><a href="#fn2">2</a></sup>. Today's prices also understate the problem, since most AI labs are <a href="https://www.wsj.com/tech/ai/ai-giants-are-handing-out-tons-of-free-computing-power-to-grab-startup-share-c00a5c5c">subsidizing token costs to capture market share</a>, and frontier model prices are expected to rise.</p>
         </div></div>
         <div class="problem"><span class="num">02</span><div>
           <h4>Finding efficient and safe ways to provide business context</h4>
@@ -510,9 +514,8 @@
         </div></div>
       </div>
       <p>
-        In this article we give a detailed overview of the AI deployment technique that the
-        companies winning with AI are rushing to adopt, fine-tuning open-source models via
-        reinforcement learning, and show how it tackles all three challenges above.
+        In this article we give a detailed overview of the deployment technique the winning group keeps converging on: fine-tuning open-source models with reinforcement learning.
+        We cover how it addresses all three challenges above, and how it turns things only your organization has (namely data, tools, and processes) into a model no vendor API can match at a fraction of the cost.
       </p>
     </section>
 
@@ -520,19 +523,31 @@
       <p class="kicker">Part II · The other side of the divide</p>
       <h2>What the winners do differently</h2>
       <p>
-        The companies pulling ahead stopped treating AI as a vendor API and started treating it as
-        a capability they own. Concretely: they teach models to operate inside <em>their</em>
-        environment (their tools, their schemas, their policies, their definition of a mistake)
-        and they measure everything against a score they trust.
+        Most of the companies pulling ahead in the AI race made the same discovery: at scale, owning your
+        intelligence wins on both performance and cost. A model trained to complete your specific workflows
+        in your specific environment is very likely to outperform a general-purpose model that has never seen inside your company.
+        Additionally, since you do not need to pack as many general purpose capabilities into a model that is meant to operate in a specific environment,
+        you can often get away with a smaller model that is orders of magnitude cheaper to run.
       </p>
+      <blockquote class="pull attrib">
+        Open weights also give customers greater control. As organizations invest in AI, they
+        want to know that they will not become locked into a single provider or lose the
+        knowledge and capabilities they build over time. Open weight models help provide that
+        assurance by allowing organizations to control their own data, evaluate and adapt models
+        to their own needs, and deploy them wherever their business requirements demand. And as
+        organizations create value with AI, open weights allow them to own that value through
+        self-improving models, specialized capabilities, and accumulated knowledge that drive
+        American sovereignty and prosperity.
+        <cite>Jensen Huang, CEO of NVIDIA</cite>
+      </blockquote>
       <p>
-        For specific, repeatable, well-defined workflows, their answer is fine-tuning
-        open-source models: distilling general intelligence into specialized performance, for
-        maximum control and cost efficiency. Organizational expertise moves directly into the
-        model weights instead of riding along as context on every call. Frontier models keep
-        the open-ended, novel work; the specialist takes the high-volume routine. In practice
-        you place a model inside a simulated version of the workflow, let it act, score the
-        outcomes, and train on the scores.
+        Owning your intelligence does not mean cancelling the ChatGPT or Claude subscription.
+        Most workflow automation still starts with frontier models, and that is the right
+        first move: it establishes a baseline for what is technically possible, and every call
+        generates the data (inputs, decisions, corrections) that a specialist model later trains on.
+        Once the automation leaves the prototyping stage, the priority flips to cost and
+        performance at volume, and that is where fine-tuning open-source models with
+        reinforcement learning comes in.
       </p>
     </section>
   </div>
