@@ -1,4 +1,5 @@
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>When Machines Take the Wheel: a task-trained open source model vs the frontier</title>
 <style>
   /* Bright theme is the default; dark is explicit via the toggle. */
@@ -46,10 +47,10 @@
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; background: var(--paper); }
   body {
     margin: 0;
-    background: var(--paper);
+    background: transparent;
     color: var(--ink);
     font-family: "Iowan Old Style", "Palatino Nova", Palatino, "Book Antiqua", Georgia, serif;
     font-size: 19px;
@@ -57,6 +58,24 @@
     -webkit-font-smoothing: antialiased;
   }
   .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+
+  /* ---------- page background wash ---------- */
+  /* Fixed, heavily dimmed hero photo behind the whole page. Sits above the html
+     background but below every element, so body text contrast is unchanged.
+     Inset is negative so the blur does not feather in from the viewport edges. */
+  body::before {
+    content: "";
+    position: fixed; inset: -12px; z-index: -1;
+    background: url("figures/assets/hero_wheel.jpg") center / cover no-repeat;
+    filter: blur(7px) saturate(.5);
+    opacity: .045;
+    pointer-events: none;
+  }
+  :root[data-theme="dark"] body::before {
+    filter: blur(7px) saturate(.45) brightness(.8);
+    opacity: .11;
+  }
+  @media print { body::before { display: none; } }
 
   /* ---------- top bar ---------- */
   .topbar {
@@ -96,8 +115,24 @@
   .col { max-width: 680px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
   .wide { max-width: 800px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 24px); }
 
+  /* ---------- hero image ---------- */
+  .hero-figure { position: relative; margin: 0; }
+  .hero-figure img {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 16 / 6.2;
+    object-fit: cover;
+    object-position: 50% 40%;
+  }
+  /* Fade the photo into the paper so the headline below reads as one block. */
+  .hero-figure::after {
+    content: ""; position: absolute; inset: auto 0 -1px 0; height: 40%;
+    background: linear-gradient(to bottom, transparent, var(--paper) 92%);
+    pointer-events: none;
+  }
+  @media (max-width: 700px) { .hero-figure img { aspect-ratio: 4 / 3; } }
+
   /* ---------- hero ---------- */
-  header.hero { padding: clamp(48px, 9vh, 96px) 0 8px; text-align: center; }
+  header.hero { padding: clamp(24px, 4.5vh, 48px) 0 8px; text-align: center; }
   .hero .standfirst { margin-left: auto; margin-right: auto; }
   .stat { text-align: center; }
   .eyebrow {
@@ -430,12 +465,18 @@
   </div>
 </nav>
 
+<figure class="hero-figure">
+  <img src="figures/assets/hero_wheel.jpg"
+       width="1536" height="1024" fetchpriority="high"
+       alt="A humanoid robot stands at the wooden helm of a ship's bridge, looking out through rain-streaked windows at an open grey sea.">
+</figure>
+
 <header class="hero wide" id="top">
   <h1>When Machines Take the Wheel</h1>
   <p class="standfirst">
-    Why the companies winning with AI own their intelligence.
+    What is the common denominator among companies succeeding with AI-first strategies? 
   </p>
-  <p class="byline"><span class="au"><a href="https://www.linkedin.com/in/justinz/">Justinas Zaliaduonis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/jorisbenjaminaszilinskis/">Joris Zilinskis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/fabian-hildesheim/">Fabian Hildesheim</a></span><span class="au"> · <a href="https://www.linkedin.com/in/joel-hainzl/">Joel Hainzl</a></span><span class="au"> · <a href="https://www.linkedin.com/in/gediminaspazera/">Gediminas Pazera</a></span><br>July 23, 2026</p>
+  <p class="byline"><span class="au"><a href="https://www.linkedin.com/in/justinz/">Justinas Zaliaduonis</a></span> · <span class="au"><a href="https://www.linkedin.com/in/jorisbenjaminaszilinskis/">Joris Zilinskis</a></span> · <span class="au"><a href="https://www.linkedin.com/in/fabian-hildesheim/">Fabian Hildesheim</a></span> · <span class="au"><a href="https://www.linkedin.com/in/joel-hainzl/">Joel Hainzl</a></span> · <span class="au"><a href="https://www.linkedin.com/in/gediminaspazera/">Gediminas Pazera</a></span><br>July 23, 2026</p>
 </header>
 
 <article>
@@ -451,12 +492,12 @@
       </p>
       <p>
         It quickly moved into higher-value cognitive work, such as software development and
-        design, and grew into more ambitious projects: attempts to build an AI <a href="https://www.sentra.app/articles/what-is-a-company-brain">"company brain"</a>,
+        content generation, and grew into more ambitious projects: attempts to build an AI <a href="https://www.sentra.app/articles/what-is-a-company-brain">"company brain"</a>,
         a system connected to internal knowledge, data, and tools that could coordinate work
         and eventually operate parts of the business autonomously.
       </p>
       <p>
-        The gains from AI adoption, however, were not distributed equally. Some companies
+        While a lot of time, energy and tokens have been invested in AI adoption, mesurable outcomes have barely been achieved at scale. However, some companies
         embraced being AI-first and saw enormous gains in productivity, revenue, and cost,
         while others lagged behind or failed to change their organizations enough to reach
         high ROI.
@@ -472,7 +513,7 @@
 
   <div class="wide">
   <figure class="viz reveal" id="fig-divide">
-    <p class="viz-title">AI ROI divide</p>
+    <p class="viz-title">Top AI Adopters outperform across industries</p>
     <div class="legend">
       <span class="l-hero"><i></i>top quartile of AI spenders</span>
       <span class="l-base-gray"><i></i>businesses with zero AI spend</span>
@@ -492,27 +533,35 @@
     <section id="mixed-results-2">
       <p>
         There are many reasons why AI has done wonders for some companies and made life hard
-        for others, but it mostly comes down to three:
+        for others, but it mostly comes down to five points:
       </p>
 
       <div class="problems">
         <div class="problem"><span class="num">01</span><div>
-          <h4>Achieving business goals within the AI budget</h4>
-          <p>Uber blew its annual engineering budget in four months; Microsoft cancelled most of its Claude licenses to rein in spiralling costs<sup class="fn"><a href="#fn2">2</a></sup>. Companies triage which workflows need what sized models, but on some tasks the output doesn't justify the cost. Furthermore, it is expected for frontier model costs to rise even further, since most AI labs are currently <a href="https://www.wsj.com/tech/ai/ai-giants-are-handing-out-tons-of-free-computing-power-to-grab-startup-share-c00a5c5c">subsidizing the token costs to capture market share</a>.</p>
+          <h4>Redesign the process, not just the task</h4>
+          <p>Becoming AI-first means rethinking how the work is structured, not dropping a model into a workflow built around people: what gets approved, who reviews what, and which handoffs still need a human. Where the process stays untouched, legacy bottlenecks absorb the productivity gains before they reach the P&amp;L. In McKinsey's 2025 survey of organizations using gen AI, workflow redesign was the attribute <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-how-organizations-are-rewiring-to-capture-value">most correlated with EBIT impact</a>, and only 21% of them had redesigned any workflow at all.</p>
         </div></div>
         <div class="problem"><span class="num">02</span><div>
-          <h4>Finding efficient and safe ways to provide business context</h4>
-          <p>Prompt engineering and retrieval can inject business context at call time, but doing it well is its own engineering program: getting to the data, enforcing access controls on what each request may see, building retrieval that surfaces the right evidence, and <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">managing a context window</a> that models <a href="https://arxiv.org/abs/2307.03172">use unevenly as it grows</a>.</p>
+          <h4>Incentivize experimentation</h4>
+          <p>Models, tooling and best practices change weekly, so last quarter's setup is rarely still the right one. That only gets picked up if people are rewarded for trying things and reporting what failed, not just for shipping. Technical teams are the natural place to start, since they see the same problems recur across functions and can tell which of them a model can actually take over.</p>
         </div></div>
         <div class="problem"><span class="num">03</span><div>
-          <h4>Measuring impact and justifying the investment</h4>
-          <p>Every AI line item eventually meets the CFO question: what did this change, and was it worth it? Most deployments can't answer it. They don't know how often the model is right, what a decision costs, or what actually moved in revenue or hours saved, and self-reports run hot: METR found people <a href="https://metr.org/blog/2026-05-11-ai-usage-survey/">overestimate AI's time savings by about 40 percentage points</a>. Without a scored evaluation on your own data, "it seems to work" is the ceiling of what you can claim, and a hard budget to defend.</p>
+          <h4>Provide tailored business context</h4>
+          <p>Prompt engineering and retrieval can inject business context at call time, but doing it well is its own engineering program: getting to the data, enforcing access controls on what each request may see, building retrieval that surfaces the right evidence, and <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">managing a context window</a> that models <a href="https://arxiv.org/abs/2307.03172">use unevenly as it grows</a>.</p>
+        </div></div>
+        <div class="problem"><span class="num">04</span><div>
+          <h4>Measure usage and impact</h4>
+          <p>Every AI line item eventually meets the CFO question: what did this change, and was it worth it? Most deployments can't answer it, and self-reports run hot: METR found people <a href="https://metr.org/blog/2026-05-11-ai-usage-survey/">overestimate AI's time savings by about 40 percentage points</a>. Without a scored evaluation on your own data, "it seems to work" is the ceiling of what you can claim, and a hard budget to defend.</p>
+        </div></div>
+        <div class="problem"><span class="num">05</span><div>
+          <h4>Set clear business goals</h4>
+          <p>Uber blew its annual engineering budget in four months; Microsoft cancelled most of its Claude licenses to rein in spiralling costs<sup class="fn"><a href="#fn2">2</a></sup>. Spend holds up when every workflow carries a goal and a model sized to match it, and it slips when teams buy frontier capability for tasks that never needed it. The pressure runs one way: most AI labs are currently <a href="https://www.wsj.com/tech/ai/ai-giants-are-handing-out-tons-of-free-computing-power-to-grab-startup-share-c00a5c5c">subsidizing the token costs to capture market share</a>.</p>
         </div></div>
       </div>
       <p>
         In this article we give a detailed overview of the AI deployment technique that the
         companies winning with AI are rushing to adopt, fine-tuning open-source models via
-        reinforcement learning, and show how it tackles all three challenges above.
+        reinforcement learning, and show how it tackles the last three challenges above.
       </p>
     </section>
 
