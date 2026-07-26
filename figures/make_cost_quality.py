@@ -132,9 +132,6 @@ for s in ("top", "right"):
 for s in ("left", "bottom"):
     ax.spines[s].set_color("#D5DAE1")
 
-# title (centered over the plot)
-fig.text(0.52, 0.955, "Cost vs. quality on catalog integrity", fontsize=18,
-         fontweight="bold", color=INK, ha="center", va="top")
 
 # legend inside bottom-right (empty space), framed
 handles = [
@@ -156,10 +153,10 @@ leg.get_frame().set_edgecolor("#E2E6EC")
 leg.get_frame().set_facecolor("#FFFFFF")
 leg.get_frame().set_linewidth(0.9)
 
-plt.subplots_adjust(left=0.075, right=0.965, top=0.90, bottom=0.115)
+plt.subplots_adjust(left=0.075, right=0.965, top=0.97, bottom=0.115)
 
-base = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-for ext in ("png", "svg", "pdf"):
-    p = os.path.join(base, f"benchmarks/figures/cost_quality.{ext}")
+base = os.path.dirname(os.path.abspath(__file__))
+for ext in ("png", "svg"):
+    p = os.path.join(base, f"cost_quality.{ext}")
     fig.savefig(p, dpi=300, facecolor=FACE)
     print("wrote", p)
