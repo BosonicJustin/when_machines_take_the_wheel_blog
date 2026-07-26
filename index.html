@@ -994,12 +994,12 @@ specialist model to handle the parts of the workflow that require your internal 
       </p>
       <p>
         It is just as important to know where this is the wrong tool. Two questions settle
-        most cases: how often the work runs, and whether its outcome can be scored.
+        most cases: how frequently the task runs, and whether its outcome is verifiable.
       </p>
       <figure class="viz reveal" id="fig-quadrant">
         <p class="viz-title">Which tool fits which work</p>
         <div class="plot-wrap">
-          <svg viewBox="0 0 860 470" role="img" aria-label="Quadrant chart. Vertical axis: how checkable the outcome is, from debatable to scorable. Horizontal axis: how often the work runs, from rare to constant. Scorable and constant work fits a fine-tuned specialist; scorable but rare work fits a prompted frontier model; debatable and rare work fits a frontier model; debatable and constant work fits a frontier model with human review.">
+          <svg viewBox="0 0 860 470" role="img" aria-label="Quadrant chart. Vertical axis: outcome verifiability, from non-verifiable to verifiable. Horizontal axis: task frequency, from rare to frequent. Verifiable and frequent work fits a fine-tuned specialist; verifiable but rare work fits a prompt-optimized frontier model; non-verifiable rare work fits a frontier model; non-verifiable frequent work fits a frontier model with human review.">
             <defs>
               <marker id="qd-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                 <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
@@ -1009,23 +1009,25 @@ specialist model to handle the parts of the workflow that require your internal 
             <rect x="472" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
             <rect x="115" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
             <rect x="472" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
-            <text x="287" y="126" class="row-label" text-anchor="middle">prompted frontier model</text>
+            <text x="287" y="126" class="row-label" text-anchor="middle">prompt-optimized frontier model</text>
             <text x="644" y="118" class="row-label" text-anchor="middle" style="fill:var(--accent-text);font-weight:600">fine-tuned specialist</text>
             <text x="644" y="140" class="annot" text-anchor="middle">owned, practiced, cheap at scale</text>
             <text x="287" y="318" class="row-label" text-anchor="middle">frontier model</text>
             <text x="644" y="318" class="row-label" text-anchor="middle">frontier model + human review</text>
             <line x1="95" y1="402" x2="95" y2="38" stroke="var(--mute)" marker-end="url(#qd-a)"/>
-            <text x="88" y="52" class="annot" text-anchor="end">scorable</text>
-            <text x="88" y="398" class="annot" text-anchor="end">debatable</text>
+            <text x="88" y="52" class="annot" text-anchor="end">verifiable</text>
+            <text x="88" y="398" class="annot" text-anchor="end">non-verifiable</text>
             <line x1="115" y1="428" x2="822" y2="428" stroke="var(--mute)" marker-end="url(#qd-a)"/>
             <text x="115" y="454" class="annot">rare</text>
-            <text x="817" y="454" class="annot" text-anchor="end">constant</text>
+            <text x="466" y="454" class="annot" text-anchor="middle">task frequency</text>
+            <text x="817" y="454" class="annot" text-anchor="end">frequent</text>
           </svg>
         </div>
         <figcaption>
-          The upper right is where fine-tuning pays: work that runs constantly and can be
-          scored. Everything else is better rented: a prompted frontier model covers scorable
-          but occasional work, and a human stays in the loop where quality is debatable. When
+          The upper right is where fine-tuning pays: frequent work with verifiable outcomes.
+          Everything else is better rented: a prompt-optimized frontier model covers
+          verifiable but rare work, and a human stays in the loop where outcomes can't be
+          verified. When
           the problem is changing facts rather than judgment, retrieval is the fix at any
           volume. The checklist below condenses the upper-right conditions into something you
           can hold your own workflows against:
