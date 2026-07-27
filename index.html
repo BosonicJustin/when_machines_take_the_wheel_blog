@@ -1159,27 +1159,6 @@ specialist model to handle the parts of the workflow that require your internal 
           <a href="https://appliedcompute.com/case-studies/doordash">DoorDash &times; Applied Compute</a>,
           <a href="https://shopify.engineering/fine-tuning-agent-shopify-flow">Shopify Flow agent</a>.</li>
       </ol>
-      <p>
-        All benchmark numbers come from the open
-        <a href="https://github.com/BosonicJustin/e_commerce_env">catalog-integrity environment</a>:
-        200 stratified validation episodes, seed 0, identical system prompt, tools, turn budget,
-        and scorer across every model. Achievable ceiling on this episode mix ≈ 0.717. The trained
-        model's 0.626 (87%) is its <em>conservative</em> score: measured through a generic chat
-        harness that under-renders it, while frontier models ran with native tool-calling; in its
-        designed serving path it evaluates at ≈0.67 (93%).
-      </p>
-      <p>
-        Design choices that could have flattered us, disclosed. We chose the task ourselves,
-        and we chose it because it is exactly the kind of workflow fine-tuning should win: this
-        is a demonstration of the favorable case, not a survey of tasks. All eight frontier
-        configurations ran with one shared system prompt and identical tool schemas, with no
-        per-model branching, and the workflow-guide appendix contains no protected brand names,
-        no dataset episodes, and no scoring internals. The 200-episode mix is 154 clean, 31
-        image-mismatch, 8 legitimate-brand hard negatives, and 7 counterfeit cases, drawn with
-        a fixed seed. All numbers are single evaluation runs without confidence intervals, and
-        the benchmark uses the validation split; an untouched test split is reserved for the
-        final published version.
-      </p>
     </section>
   </div>
 </article>
