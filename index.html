@@ -82,8 +82,9 @@
   }
   .topbar .brand {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    font-size: clamp(12px, 1.5vw, 16px); letter-spacing: .1em; text-transform: uppercase;
     color: var(--ink-2); text-decoration: none;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
   }
   .topbar .side { display: flex; align-items: center; gap: 12px; }
   #theme-toggle {
@@ -104,7 +105,9 @@
   .cta-mini:hover { filter: brightness(.94); }
   @media (max-width: 560px) { .cta-mini { display: none; } }
 
-  /* ---------- layout ---------- */
+  /* ---------- layout ----------
+     .col is the body-copy measure; .wide is the default for every figure,
+     chart, and table, so all visuals line up at the same width. */
   .col { max-width: 680px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
   .wide { max-width: 800px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 24px); }
 
@@ -358,21 +361,59 @@
   table.data td { border-bottom: 1px solid var(--rule); padding: 10px 16px 10px 0; vertical-align: top; }
   table.data td:first-child { white-space: nowrap; font-weight: 600; vertical-align: middle; }
 
+  /* ---------- appendix: reference table, out of the narrative ---------- */
+  .appendix { border-top: 2px solid var(--ink); margin: 64px 0 0; padding-top: 22px; }
+  .appendix h2 { font-size: clamp(21px, 2.4vw, 25px); margin-bottom: 10px; }
+  .appendix-intro { font-size: 15.5px; line-height: 1.55; color: var(--mute); max-width: 68ch; }
+  table.data.track { min-width: 720px; font-size: 14px; }
+  table.data.track th { padding: 0 18px 8px 0; }
+  table.data.track td { padding: 13px 18px 13px 0; }
+  table.data.track th:last-child, table.data.track td:last-child { padding-right: 0; }
+  /* company column carries the link; let long names wrap rather than widen the table */
+  table.data.track td:first-child { white-space: normal; vertical-align: top; }
+  table.data.track td:first-child a { text-decoration-color: var(--teal-text); color: var(--teal-text); }
+  table.data.track tbody tr:hover td { background: var(--paper-2); }
+  table.data.track col.c-what { width: 24%; }
+  table.data.track col.c-result { width: 26%; }
+  table.data.track col.c-payoff { width: 34%; }
+  /* below the table's comfortable measure, each row becomes its own labelled block */
+  @media (max-width: 720px) {
+    table.data.track, table.data.track tbody, table.data.track tr, table.data.track td { display: block; width: auto; }
+    table.data.track { min-width: 0; }
+    table.data.track thead { display: none; }
+    table.data.track tbody tr {
+      border: 1px solid var(--rule); border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 12px; background: var(--card);
+    }
+    table.data.track td { border-bottom: none; padding: 0 0 10px; }
+    table.data.track td:last-child { padding-bottom: 0; }
+    table.data.track td::before {
+      content: attr(data-th); display: block;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--mute); font-weight: 600; margin-bottom: 2px;
+    }
+    table.data.track td:first-child::before { display: none; }
+    table.data.track td:first-child { font-size: 16px; font-weight: 600; padding-bottom: 12px; }
+    table.data.track tbody tr:hover td { background: none; }
+  }
+
   /* ---------- CTA: inverted closing band ---------- */
   .cta-panel {
     background: var(--ink); color: var(--paper);
     padding: clamp(32px, 5vw, 52px);
+    border-radius: 12px;
     margin: 64px 0 48px; text-align: center;
   }
-  .cta-panel .kicker { color: var(--paper); }
-  .cta-panel h2 { margin-bottom: 12px; color: inherit; }
+  .cta-panel h2 { margin-bottom: 0; color: inherit; }
   .cta-panel p { max-width: 58ch; color: inherit; opacity: .85; margin-left: auto; margin-right: auto; }
+  .cta-panel > :last-child { margin-bottom: 0; }
   .cta-btn {
-    display: inline-block; margin-top: 18px;
+    display: inline-block; margin-top: 24px;
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     font-size: 14px; letter-spacing: .08em; text-transform: uppercase;
     color: var(--btn-fg); background: var(--btn-bg); text-decoration: none;
-    padding: 15px 26px;
+    padding: 15px 26px; border-radius: 999px;
   }
   .cta-btn:hover { filter: brightness(1.08); }
   .cta-note { font-size: 13.5px; margin-top: 14px; opacity: .6; }
@@ -439,14 +480,14 @@
   <p class="standfirst">
     What is the common denominator among companies succeeding with AI-first strategies?
   </p>
-  <p class="byline"><span class="au"><a href="https://www.linkedin.com/in/justinz/">Justinas Zaliaduonis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/jorisbenjaminaszilinskis/">Joris Zilinskis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/fabian-hildesheim/">Fabian Hildesheim</a></span><span class="au"> · <a href="https://www.linkedin.com/in/joel-hainzl/">Joel Hainzl</a></span><span class="au"> · <a href="https://www.linkedin.com/in/gediminaspazera/">Gediminas Pazera</a></span><br>July 23, 2026</p>
+  <p class="byline"><span class="au"><a href="https://www.linkedin.com/in/justinz/">Justinas Zaliaduonis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/jorisbenjaminaszilinskis/">Joris Zilinskis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/fabian-hildesheim/">Fabian Hildesheim</a></span><span class="au"> · <a href="https://www.linkedin.com/in/joel-hainzl/">Joel Hainzl</a></span><span class="au"> · <a href="https://www.linkedin.com/in/gediminaspazera/">Gediminas Pazera</a></span><br>July 27, 2026</p>
 </header>
 
 <article>
   <div class="col">
 
     <section id="how-we-got-here">
-      <p class="kicker">Part I · How we got here</p>
+      <p class="kicker">Part I</p>
       <h2>Everyone asked the same question</h2>
       <p class="lede">
         Since ChatGPT launched in 2022, business leaders have been asking the same question:
@@ -528,7 +569,7 @@
     </section>
 
     <section id="winners">
-      <p class="kicker">Part II · The other side of the divide</p>
+      <p class="kicker">Part II</p>
       <h2>What the winners do differently</h2>
       <p>
         Most of the companies pulling ahead in the AI race made the same discovery: owning your
@@ -604,73 +645,13 @@ specialist model to handle the parts of the workflow that require your internal 
         more issues than the best frontier models while being cheaper to run</a>.
       </p>
       <p>
-        Beyond the flagships, the same shape repeats across industries:
+        The same shape repeats well beyond these three. The
+        <a href="#appendix">appendix</a> collects eight more deployments, with what each
+        model was trained to do and what changed once it shipped.
       </p>
     </section>
   </div>
 
-  <div class="wide">
-    <figure class="viz reveal" id="case-table">
-      <p class="viz-title">The track record: task-trained specialists vs. prompted frontier models</p>
-      <div class="tbl-wrap">
-        <table class="data">
-          <thead>
-            <tr><th>Company</th><th>What the model does</th><th>Result</th><th>Business payoff</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a href="https://cognition.ai/blog/swe-1-7">Cognition</a></td>
-              <td>Writes and fixes software in production</td>
-              <td>Beats GPT-5.5 on a standard coding benchmark</td>
-              <td>Frontier-level output at a fraction of the serving cost, streaming 1,000 tokens per second</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.adaptive-ml.com/post/how-att-saves-millions-with-specialized-language-models">AT&amp;T</a></td>
-              <td>Summarizes 900k support calls a day and flags personal data</td>
-              <td>17% better than GPT-4o at catching personal data</td>
-              <td>Reviews fraud cases 12× faster at GPT-4o accuracy; saves millions of dollars annually</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform">LinkedIn</a></td>
-              <td>Matches candidates to job openings</td>
-              <td>4% more accurate than the GPT model it replaced</td>
-              <td>75× cheaper than GPT-4.6× cheaper than GPT-4o</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.ambiencehealthcare.com/blog/ambience-healthcare-s-ai-platform-surpasses-clinician-performance-by-27-in-medical-coding-powered-by-new-openai-breakthrough">Ambience Healthcare</a></td>
-              <td>Assigns medical billing codes</td>
-              <td>More accurate than 18 board-certified physicians on a gold-panel test</td>
-              <td>12 points ahead of prompted o4-mini, the OpenAI model it was built from</td>
-            </tr>
-            <tr>
-              <td><a href="https://venturebeat.com/business/phonelys-new-ai-agents-hit-99-accuracy-and-customers-cant-tell-theyre-not-human">Phonely</a></td>
-              <td>Answers customer phone calls</td>
-              <td>99.2% accuracy vs GPT-4o's 94.7%</td>
-              <td>Responses 73% faster than its previous GPT-4o setup; one customer replaced 350 human agents in a month</td>
-            </tr>
-            <tr>
-              <td><a href="https://openpipe.ai/blog/art-e-mail-agent">OpenPipe</a></td>
-              <td>Handles email and support tickets</td>
-              <td>93% on support QA where OpenAI's o3 scored 50%</td>
-              <td>64× cheaper and 5× faster to run than o3</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.perplexity.ai/hub/blog/meet-new-sonar">Perplexity</a></td>
-              <td>Answers search queries with sources</td>
-              <td>Matches GPT-4o in blind user tests</td>
-              <td>10× the speed of GPT-4o at a fraction of the price</td>
-            </tr>
-            <tr>
-              <td><a href="https://21944583.fs1.hubspotusercontent-na1.net/hubfs/21944583/Webinar%20Files/LLMOps%20Micro-Summit_%20Checkr%20-%20Streamlining%20Background%20Checks%20with%20a%20Fine-tuned%20Classifier%20on%20Predibase.pdf">Checkr</a></td>
-              <td>Classifies criminal-record entries in background checks</td>
-              <td>Beats GPT-4 on the hardest cases</td>
-              <td>5× cheaper and 30× faster than its previous GPT-4 setup</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </figure>
-  </div>
 
   <div class="col">
     <section id="ecommerce-lineage">
@@ -680,11 +661,6 @@ specialist model to handle the parts of the workflow that require your internal 
         dramatically lower cost per call. The deployment typically starts by using prompt and
         context engineered frontier models to establish the strongest default baseline. Those frontier traces and learnings are then reused to pack the focused
         capability into a compact model the company owns.
-      </p>
-      <p>
-        In the next section we run this playbook ourselves on one of e-commerce's most
-        essential workflows, walk through the numbers at each step, and look at the business
-        value that comes out the other end.
       </p>
     </section>
 
@@ -789,7 +765,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="col">
     <section id="methodology">
-      <p class="kicker">Part IV · The experiment</p>
+      <p class="kicker">Part IV</p>
       <h2>A digital twin the model can practice in</h2>
       <p>
         A model can only practice a workflow it can actually perform, fail at, and retry. So we
@@ -812,53 +788,56 @@ specialist model to handle the parts of the workflow that require your internal 
         and wasted tool calls. The penalties encode business priorities directly: a missed
         violation costs 7× more than a false alarm.
       </p>
-      <figure class="viz reveal" id="fig-twin">
-        <p class="viz-title">The digital twin, end to end</p>
-        <div class="plot-wrap">
-          <svg viewBox="0 0 860 330" role="img" aria-label="Diagram of the training environment: a listing flows to the agent, which consults three tools, commits a decision, receives a score, and the reward flows back to the agent. The score is 0.3 times category plus 0.3 times attributes plus 0.4 times policy, minus tool overage.">
-            <defs>
-              <marker id="dg-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
-              </marker>
-              <marker id="dg-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
-              </marker>
-            </defs>
-            <rect x="190" y="16" width="240" height="156" rx="10" fill="none" stroke="var(--rule)" stroke-dasharray="5 5"/>
-            <text x="202" y="34" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;fill:var(--mute);letter-spacing:.08em">TOOLS</text>
-            <rect x="210" y="42" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
-            <rect x="210" y="82" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
-            <rect x="210" y="122" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
-            <text x="310" y="63" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">search_taxonomy()</text>
-            <text x="310" y="103" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">lookup_brand()</text>
-            <text x="310" y="143" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">get_attribute_schema()</text>
-            <line x1="310" y1="176" x2="310" y2="206" stroke="var(--mute)" marker-start="url(#dg-a)" marker-end="url(#dg-a)"/>
-            <rect x="25" y="210" width="125" height="56" rx="8" fill="none" stroke="var(--mute)"/>
-            <rect x="230" y="210" width="160" height="56" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.7"/>
-            <rect x="520" y="210" width="140" height="56" rx="8" fill="none" stroke="var(--mute)"/>
-            <rect x="720" y="210" width="115" height="56" rx="8" fill="none" stroke="var(--mute)"/>
-            <text x="87" y="243" class="row-label" text-anchor="middle">listing</text>
-            <text x="310" y="243" class="row-label" text-anchor="middle">agent</text>
-            <text x="590" y="243" class="row-label" text-anchor="middle">decision</text>
-            <text x="777" y="243" class="row-label" text-anchor="middle">score</text>
-            <line x1="150" y1="238" x2="222" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
-            <line x1="390" y1="238" x2="512" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
-            <line x1="660" y1="238" x2="712" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
-            <path d="M 777 266 L 777 302 L 310 302 L 310 276" fill="none" stroke="var(--accent)" stroke-dasharray="6 5" marker-end="url(#dg-r)"/>
-            <text x="545" y="294" class="annot" text-anchor="middle" style="fill:var(--accent-text)">reward</text>
-            <rect x="565" y="36" width="280" height="58" rx="9" fill="none" stroke="var(--mute)" stroke-dasharray="4 4"/>
-            <text x="705" y="61" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">0.3&#183;category + 0.3&#183;attributes</text>
-            <text x="705" y="81" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">+ 0.4&#183;policy &#8722; tool_overage</text>
-            <line x1="777" y1="206" x2="777" y2="98" stroke="var(--mute)" stroke-dasharray="4 4"/>
-          </svg>
-        </div>
-        <figcaption>
-          Every part of the real workflow has a counterpart in the twin: listings flow in, the
-          agent consults the same tools an analyst would, and a scorer grades each decision.
-          The reward flowing back is what turns practice into learning.
-        </figcaption>
-      </figure>
     </section>
+  </div>
+
+  <div class="wide">
+    <figure class="viz reveal" id="fig-twin">
+      <p class="viz-title">The digital twin, end to end</p>
+      <div class="plot-wrap">
+        <svg viewBox="0 0 860 330" role="img" aria-label="Diagram of the training environment: a listing flows to the agent, which consults three tools, commits a decision, receives a score, and the reward flows back to the agent. The score is 0.3 times category plus 0.3 times attributes plus 0.4 times policy, minus tool overage.">
+          <defs>
+            <marker id="dg-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
+            </marker>
+            <marker id="dg-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+          <rect x="190" y="16" width="240" height="156" rx="10" fill="none" stroke="var(--rule)" stroke-dasharray="5 5"/>
+          <text x="202" y="34" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;fill:var(--mute);letter-spacing:.08em">TOOLS</text>
+          <rect x="210" y="42" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
+          <rect x="210" y="82" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
+          <rect x="210" y="122" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
+          <text x="310" y="63" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">search_taxonomy()</text>
+          <text x="310" y="103" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">lookup_brand()</text>
+          <text x="310" y="143" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">get_attribute_schema()</text>
+          <line x1="310" y1="176" x2="310" y2="206" stroke="var(--mute)" marker-start="url(#dg-a)" marker-end="url(#dg-a)"/>
+          <rect x="25" y="210" width="125" height="56" rx="8" fill="none" stroke="var(--mute)"/>
+          <rect x="230" y="210" width="160" height="56" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.7"/>
+          <rect x="520" y="210" width="140" height="56" rx="8" fill="none" stroke="var(--mute)"/>
+          <rect x="720" y="210" width="115" height="56" rx="8" fill="none" stroke="var(--mute)"/>
+          <text x="87" y="243" class="row-label" text-anchor="middle">listing</text>
+          <text x="310" y="243" class="row-label" text-anchor="middle">agent</text>
+          <text x="590" y="243" class="row-label" text-anchor="middle">decision</text>
+          <text x="777" y="243" class="row-label" text-anchor="middle">score</text>
+          <line x1="150" y1="238" x2="222" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
+          <line x1="390" y1="238" x2="512" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
+          <line x1="660" y1="238" x2="712" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
+          <path d="M 777 266 L 777 302 L 310 302 L 310 276" fill="none" stroke="var(--accent)" stroke-dasharray="6 5" marker-end="url(#dg-r)"/>
+          <text x="545" y="294" class="annot" text-anchor="middle" style="fill:var(--accent-text)">reward</text>
+          <rect x="565" y="36" width="280" height="58" rx="9" fill="none" stroke="var(--mute)" stroke-dasharray="4 4"/>
+          <text x="705" y="61" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">0.3&#183;category + 0.3&#183;attributes</text>
+          <text x="705" y="81" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">+ 0.4&#183;policy &#8722; tool_overage</text>
+          <line x1="777" y1="206" x2="777" y2="98" stroke="var(--mute)" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+      <figcaption>
+        Every part of the real workflow has a counterpart in the twin: listings flow in, the
+        agent consults the same tools an analyst would, and a scorer grades each decision.
+        The reward flowing back is what turns practice into learning.
+      </figcaption>
+    </figure>
   </div>
 
   <div class="col">
@@ -889,7 +868,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="wide">
     <figure class="viz reveal" id="fig-plateau">
-      <p class="viz-title">One benchmark, every model we tested</p>
+      <p class="viz-title">Model benchmarks</p>
       <div class="plate"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjkwNy4ycHQiIGhlaWdodD0iNTc2cHQiIHZpZXdCb3g9IjAgMCA5MDcuMiA1NzYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgIDxjYzpXb3JrPgogICAgPGRjOnR5cGUgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIvPgogICAgPGRjOmRhdGU+MjAyNi0wNy0yNlQxODoxNzozMS4xMDY5ODY8L2RjOmRhdGU+CiAgICA8ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD4KICAgIDxkYzpjcmVhdG9yPgogICAgIDxjYzpBZ2VudD4KICAgICAgPGRjOnRpdGxlPk1hdHBsb3RsaWIgdjMuMTEuMCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy88L2RjOnRpdGxlPgogICAgIDwvY2M6QWdlbnQ+CiAgICA8L2RjOmNyZWF0b3I+CiAgIDwvY2M6V29yaz4KICA8L3JkZjpSREY+CiA8L21ldGFkYXRhPgogPGRlZnM+CiAgPHN0eWxlIHR5cGU9InRleHQvY3NzIj4qe3N0cm9rZS1saW5lam9pbjogcm91bmQ7IHN0cm9rZS1saW5lY2FwOiBidXR0fTwvc3R5bGU+CiA8L2RlZnM+CiA8ZyBpZD0iZmlndXJlXzEiPgogIDxnIGlkPSJwYXRjaF8xIj4KICAgPHBhdGggZD0iTSAwIDU3NiAKTCA5MDcuMiA1NzYgCkwgOTA3LjIgMCAKTCAwIDAgCnoKIiBzdHlsZT0iZmlsbDogI2ZmZmZmZiIvPgogIDwvZz4KICA8ZyBpZD0iYXhlc18xIj4KICAgPGcgaWQ9InBhdGNoXzIiPgogICAgPHBhdGggZD0iTSAyMTMuMTkyIDUwOS43NiAKTCA3MDcuNjE2IDUwOS43NiAKTCA3MDcuNjE2IDE0LjQgCkwgMjEzLjE5MiAxNC40IAp6CiIgc3R5bGU9ImZpbGw6ICNmZmZmZmYiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMyI+CiAgICA8cGF0aCBkPSJNIDUzOC40NjIzODggNTA5Ljc2IApMIDU3MS43NzAwNzUgNTA5Ljc2IApMIDU3MS43NzAwNzUgMTQuNCAKTCA1MzguNDYyMzg4IDE0LjQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogIzNlOWRhMTsgb3BhY2l0eTogMC4wNjsgc3Ryb2tlOiAjM2U5ZGExOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgIDwvZz4KICAgPGcgaWQ9Im1hdHBsb3RsaWIuYXhpc18xIj4KICAgIDxnIGlkPSJ4dGlja18xIj4KICAgICA8ZyBpZD0ibGluZTJkXzEiPgogICAgICA8cGF0aCBkPSJNIDIxMy4xOTIgNTA5Ljc2IApMIDIxMy4xOTIgMTQuNCAKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjZWNlZWYxOyBzdHJva2Utd2lkdGg6IDAuOTsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzIiLz4KICAgICA8ZyBpZD0idGV4dF8xIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTBweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICM2YjcyODAiIHg9IjIxMy4xOTIiIHk9IjUyMi43OCIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMjEzLjE5MiA1MjIuNzgpIj4wPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18yIj4KICAgICA8ZyBpZD0ibGluZTJkXzMiPgogICAgICA8cGF0aCBkPSJNIDMwNi40Nzk1NDcgNTA5Ljc2IApMIDMwNi40Nzk1NDcgMTQuNCAKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjZWNlZWYxOyBzdHJva2Utd2lkdGg6IDAuOTsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzQiLz4KICAgICA8ZyBpZD0idGV4dF8yIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTBweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICM2YjcyODAiIHg9IjMwNi40Nzk1NDciIHk9IjUyMi43OCIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMzA2LjQ3OTU0NyA1MjIuNzgpIj4yMDwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF81Ij4KICAgICAgPHBhdGggZD0iTSAzOTkuNzY3MDk0IDUwOS43NiAKTCAzOTkuNzY3MDk0IDE0LjQgCiIgY2xpcC1wYXRoPSJ1cmwoI3A1OWQ5NzU3NDQ5KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogI2VjZWVmMTsgc3Ryb2tlLXdpZHRoOiAwLjk7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF82Ii8+CiAgICAgPGcgaWQ9InRleHRfMyI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDEwcHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjNmI3MjgwIiB4PSIzOTkuNzY3MDk0IiB5PSI1MjIuNzgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDM5OS43NjcwOTQgNTIyLjc4KSI+NDA8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzQiPgogICAgIDxnIGlkPSJsaW5lMmRfNyI+CiAgICAgIDxwYXRoIGQ9Ik0gNDkzLjA1NDY0MiA1MDkuNzYgCkwgNDkzLjA1NDY0MiAxNC40IAoiIGNsaXAtcGF0aD0idXJsKCNwNTlkOTc1NzQ0OSkiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICNlY2VlZjE7IHN0cm9rZS13aWR0aDogMC45OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfOCIvPgogICAgIDxnIGlkPSJ0ZXh0XzQiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxMHB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogIzZiNzI4MCIgeD0iNDkzLjA1NDY0MiIgeT0iNTIyLjc4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA0OTMuMDU0NjQyIDUyMi43OCkiPjYwPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja181Ij4KICAgICA8ZyBpZD0ibGluZTJkXzkiPgogICAgICA8cGF0aCBkPSJNIDU4Ni4zNDIxODkgNTA5Ljc2IApMIDU4Ni4zNDIxODkgMTQuNCAKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjZWNlZWYxOyBzdHJva2Utd2lkdGg6IDAuOTsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzEwIi8+CiAgICAgPGcgaWQ9InRleHRfNSI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDEwcHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjNmI3MjgwIiB4PSI1ODYuMzQyMTg5IiB5PSI1MjIuNzgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDU4Ni4zNDIxODkgNTIyLjc4KSI+ODA8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzYiPgogICAgIDxnIGlkPSJsaW5lMmRfMTEiPgogICAgICA8cGF0aCBkPSJNIDY3OS42Mjk3MzYgNTA5Ljc2IApMIDY3OS42Mjk3MzYgMTQuNCAKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjZWNlZWYxOyBzdHJva2Utd2lkdGg6IDAuOTsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzEyIi8+CiAgICAgPGcgaWQ9InRleHRfNiI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDEwcHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjNmI3MjgwIiB4PSI2NzkuNjI5NzM2IiB5PSI1MjIuNzgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDY3OS42Mjk3MzYgNTIyLjc4KSI+MTAwPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzciPgogICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDExLjVweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICMxYTFkMjMiIHg9IjQ2MC40MDQiIHk9IjU0NC44NTgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDQ2MC40MDQgNTQ0Ljg1OCkiPkF2ZXJhZ2UgJSBvZiBtYXhpbXVtIGFjaGlldmFibGUgdGFzayBzY29yZTwvdGV4dD4KICAgIDwvZz4KICAgPC9nPgogICA8ZyBpZD0ibWF0cGxvdGxpYi5heGlzXzIiPgogICAgPGcgaWQ9Inl0aWNrXzEiPgogICAgIDxnIGlkPSJsaW5lMmRfMTMiLz4KICAgICA8ZyBpZD0idGV4dF84Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogI2IyM2E2ZSIgeD0iMjA5LjY5MiIgeT0iNDkuOTM1NTkyIiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAyMDkuNjkyIDQ5LjkzNTU5MikiPlF3ZW4zLjUtOUIgKyBHUlBPICAob3Vycyk8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzIiPgogICAgIDxnIGlkPSJsaW5lMmRfMTQiLz4KICAgICA8ZyBpZD0idGV4dF85Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogIzFhMWQyMyIgeD0iMjA5LjY5MiIgeT0iOTMuMjY3NDc0IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAyMDkuNjkyIDkzLjI2NzQ3NCkiPkNsYXVkZSBPcHVzIDQuODwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xNSIvPgogICAgIDxnIGlkPSJ0ZXh0XzEwIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogIzFhMWQyMyIgeD0iMjA5LjY5MiIgeT0iMTM2LjcyMDEwNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMjA5LjY5MiAxMzYuNzIwMTA1KSI+R1BULTUuNTwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNCI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xNiIvPgogICAgIDxnIGlkPSJ0ZXh0XzExIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogIzFhMWQyMyIgeD0iMjA5LjY5MiIgeT0iMTgwLjE3MjczNyIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMjA5LjY5MiAxODAuMTcyNzM3KSI+Q2xhdWRlIEZhYmxlIDU8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzUiPgogICAgIDxnIGlkPSJsaW5lMmRfMTciLz4KICAgICA8ZyBpZD0idGV4dF8xMiI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDEwLjVweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBlbmQ7IGZpbGw6ICMxYTFkMjMiIHg9IjIwOS42OTIiIHk9IjIyMy42MjUzNjgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDIwOS42OTIgMjIzLjYyNTM2OCkiPkdlbWluaSAzLjEgUHJvPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja182Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE4Ii8+CiAgICAgPGcgaWQ9InRleHRfMTMiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxMC41cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjMWExZDIzIiB4PSIyMDkuNjkyIiB5PSIyNjcuMDc4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAyMDkuNjkyIDI2Ny4wNzgpIj5HUFQtNS42LXNvbDwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNyI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xOSIvPgogICAgIDxnIGlkPSJ0ZXh0XzE0Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogIzZiNzI4MCIgeD0iMjA5LjY5MiIgeT0iMzEwLjUzMDYzMiIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMjA5LjY5MiAzMTAuNTMwNjMyKSI+UXdlbjMuNS0yN0IgIChiYXNlKTwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfOCI+CiAgICAgPGcgaWQ9ImxpbmUyZF8yMCIvPgogICAgIDxnIGlkPSJ0ZXh0XzE1Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogIzZiNzI4MCIgeD0iMjA5LjY5MiIgeT0iMzUzLjk4MzI2MyIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMjA5LjY5MiAzNTMuOTgzMjYzKSI+UXdlbjMuNS05QiAgKGJhc2UpPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja185Ij4KICAgICA8ZyBpZD0ibGluZTJkXzIxIi8+CiAgICAgPGcgaWQ9InRleHRfMTYiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxMC41cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjNmI3MjgwIiB4PSIyMDkuNjkyIiB5PSIzOTcuNDM1ODk1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAyMDkuNjkyIDM5Ny40MzU4OTUpIj5Rd2VuMy41LTRCICAoYmFzZSk8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzEwIj4KICAgICA8ZyBpZD0ibGluZTJkXzIyIi8+CiAgICAgPGcgaWQ9InRleHRfMTciPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxMC41cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjNmI3MjgwIiB4PSIyMDkuNjkyIiB5PSI0NDAuODg4NTI2IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAyMDkuNjkyIDQ0MC44ODg1MjYpIj5Rd2VuMy41LTAuOEIgIChiYXNlKTwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMTEiPgogICAgIDxnIGlkPSJsaW5lMmRfMjMiLz4KICAgICA8ZyBpZD0idGV4dF8xOCI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDEwLjVweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBlbmQ7IGZpbGw6ICM2YjcyODAiIHg9IjIwOS42OTIiIHk9IjQ4NC4zNDExNTgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDIwOS42OTIgNDg0LjM0MTE1OCkiPlF3ZW4zLjUtMkIgIChiYXNlKTwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgIDwvZz4KICAgPGcgaWQ9ImxpbmUyZF8yNCI+CiAgICA8cGF0aCBkPSJNIDY3OS42Mjk3MzYgNTA5Ljc2IApMIDY3OS42Mjk3MzYgMTQuNCAKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlLWRhc2hhcnJheTogNiw0Ljg7IHN0cm9rZS1kYXNob2Zmc2V0OiAwOyBzdHJva2U6ICM5YWExYWM7IHN0cm9rZS13aWR0aDogMS4yIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzQiPgogICAgPHBhdGggZD0iTSAyMTMuMTkyIDUwOS43NiAKTCA3MDcuNjE2IDUwOS43NiAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjZDVkYWUxOyBzdHJva2Utd2lkdGg6IDAuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzE5Ij4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXN0eWxlOiBpdGFsaWM7IGZvbnQtc2l6ZTogOC41cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjMmU4Mzg4OyBvcGFjaXR5OiAwLjkiIHg9IjU1NS4xMTYyMzEiIHk9IjE4LjQzMTA1MyIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNTU1LjExNjIzMSAxOC40MzEwNTMpIj5mcm9udGllciBwbGF0ZWF1PC90ZXh0PgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzIwIj4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDlweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IGZpbGw6ICM2YjcyODAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY3NC40NDc2NzIgMzIxLjU0NTg5Nikgcm90YXRlKC05MCkiPm9yYWNsZSBjZWlsaW5nICgxMDAlKTwvdGV4dD4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNSI+CiAgICA8cGF0aCBkPSJNIDIxMy4xOTIgNTguMjg3MTU4IApMIDYyMC40MzA1MjUgNTguMjg3MTU4IApMIDYyMC40MzA1MjUgMzEuMzQ2NTI2IApMIDIxMy4xOTIgMzEuMzQ2NTI2IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A1OWQ5NzU3NDQ5KSIgc3R5bGU9ImZpbGw6ICNkMTRjODY7IHN0cm9rZTogI2IyM2E2ZTsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNiI+CiAgICA8cGF0aCBkPSJNIDIxMy4xOTIgMTAxLjczOTc4OSAKTCA1NTAuNTYyNDQ2IDEwMS43Mzk3ODkgCkwgNTUwLjU2MjQ0NiA3NC43OTkxNTggCkwgMjEzLjE5MiA3NC43OTkxNTggCnoKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogIzNlOWRhMTsgc3Ryb2tlOiAjMmU4Mzg4OyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF83Ij4KICAgIDxwYXRoIGQ9Ik0gNTUwLjU2MjQ0NiAxMDEuNzM5Nzg5IApMIDU3MS43NzAwNzUgMTAxLjczOTc4OSAKTCA1NzEuNzcwMDc1IDc0Ljc5OTE1OCAKTCA1NTAuNTYyNDQ2IDc0Ljc5OTE1OCAKegoiIGNsaXAtcGF0aD0idXJsKCNwNTlkOTc1NzQ0OSkiIHN0eWxlPSJmaWxsOiAjM2U5ZGExOyBvcGFjaXR5OiAwLjMyIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzgiPgogICAgPHBhdGggZD0iTSAyMTMuMTkyIDE0NS4xOTI0MjEgCkwgNTM4LjQ2MjM4OCAxNDUuMTkyNDIxIApMIDUzOC40NjIzODggMTE4LjI1MTc4OSAKTCAyMTMuMTkyIDExOC4yNTE3ODkgCnoKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogIzNlOWRhMTsgc3Ryb2tlOiAjMmU4Mzg4OyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF85Ij4KICAgIDxwYXRoIGQ9Ik0gNTM4LjQ2MjM4OCAxNDUuMTkyNDIxIApMIDU3MS41NzQ5MTMgMTQ1LjE5MjQyMSAKTCA1NzEuNTc0OTEzIDExOC4yNTE3ODkgCkwgNTM4LjQ2MjM4OCAxMTguMjUxNzg5IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A1OWQ5NzU3NDQ5KSIgc3R5bGU9ImZpbGw6ICMzZTlkYTE7IG9wYWNpdHk6IDAuMzIiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTAiPgogICAgPHBhdGggZD0iTSAyMTMuMTkyIDE4OC42NDUwNTMgCkwgNTY3LjA4NjE4MiAxODguNjQ1MDUzIApMIDU2Ny4wODYxODIgMTYxLjcwNDQyMSAKTCAyMTMuMTkyIDE2MS43MDQ0MjEgCnoKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogIzNlOWRhMTsgc3Ryb2tlOiAjMmU4Mzg4OyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xMSI+CiAgICA8cGF0aCBkPSJNIDU2Ny4wODYxODIgMTg4LjY0NTA1MyAKTCA1NzEuNTc0OTEzIDE4OC42NDUwNTMgCkwgNTcxLjU3NDkxMyAxNjEuNzA0NDIxIApMIDU2Ny4wODYxODIgMTYxLjcwNDQyMSAKegoiIGNsaXAtcGF0aD0idXJsKCNwNTlkOTc1NzQ0OSkiIHN0eWxlPSJmaWxsOiAjM2U5ZGExOyBvcGFjaXR5OiAwLjMyIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzEyIj4KICAgIDxwYXRoIGQ9Ik0gMjEzLjE5MiAyMzIuMDk3Njg0IApMIDU2Ny40MTE0NTIgMjMyLjA5NzY4NCAKTCA1NjcuNDExNDUyIDIwNS4xNTcwNTMgCkwgMjEzLjE5MiAyMDUuMTU3MDUzIAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A1OWQ5NzU3NDQ5KSIgc3R5bGU9ImZpbGw6ICMzZTlkYTE7IHN0cm9rZTogIzJlODM4ODsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTMiPgogICAgPHBhdGggZD0iTSAyMTMuMTkyIDI3NS41NTAzMTYgCkwgNTQ2LjI2ODg3NyAyNzUuNTUwMzE2IApMIDU0Ni4yNjg4NzcgMjQ4LjYwOTY4NCAKTCAyMTMuMTkyIDI0OC42MDk2ODQgCnoKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogIzNlOWRhMTsgc3Ryb2tlOiAjMmU4Mzg4OyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xNCI+CiAgICA8cGF0aCBkPSJNIDIxMy4xOTIgMzE5LjAwMjk0NyAKTCA1MTkuNTk2NzA1IDMxOS4wMDI5NDcgCkwgNTE5LjU5NjcwNSAyOTIuMDYyMzE2IApMIDIxMy4xOTIgMjkyLjA2MjMxNiAKegoiIGNsaXAtcGF0aD0idXJsKCNwNTlkOTc1NzQ0OSkiIHN0eWxlPSJmaWxsOiAjYjRiYWM0OyBzdHJva2U6ICM4YjkzYTA7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzE1Ij4KICAgIDxwYXRoIGQ9Ik0gMjEzLjE5MiAzNjIuNDU1NTc5IApMIDUxMi40NDA3NTcgMzYyLjQ1NTU3OSAKTCA1MTIuNDQwNzU3IDMzNS41MTQ5NDcgCkwgMjEzLjE5MiAzMzUuNTE0OTQ3IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A1OWQ5NzU3NDQ5KSIgc3R5bGU9ImZpbGw6ICNiNGJhYzQ7IHN0cm9rZTogIzhiOTNhMDsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTYiPgogICAgPHBhdGggZD0iTSAyMTMuMTkyIDQwNS45MDgyMTEgCkwgNTA3LjIzNjQzIDQwNS45MDgyMTEgCkwgNTA3LjIzNjQzIDM3OC45Njc1NzkgCkwgMjEzLjE5MiAzNzguOTY3NTc5IAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3A1OWQ5NzU3NDQ5KSIgc3R5bGU9ImZpbGw6ICNiNGJhYzQ7IHN0cm9rZTogIzhiOTNhMDsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfMTciPgogICAgPHBhdGggZD0iTSAyMTMuMTkyIDQ0OS4zNjA4NDIgCkwgMzU4LjkxMzEzNCA0NDkuMzYwODQyIApMIDM1OC45MTMxMzQgNDIyLjQyMDIxMSAKTCAyMTMuMTkyIDQyMi40MjAyMTEgCnoKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogI2I0YmFjNDsgc3Ryb2tlOiAjOGI5M2EwOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8xOCI+CiAgICA8cGF0aCBkPSJNIDIxMy4xOTIgNDkyLjgxMzQ3NCAKTCAzNDUuOTAyMzE4IDQ5Mi44MTM0NzQgCkwgMzQ1LjkwMjMxOCA0NjUuODcyODQyIApMIDIxMy4xOTIgNDY1Ljg3Mjg0MiAKegoiIGNsaXAtcGF0aD0idXJsKCNwNTlkOTc1NzQ0OSkiIHN0eWxlPSJmaWxsOiAjYjRiYWM0OyBzdHJva2U6ICM4YjkzYTA7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzE5Ij4KICAgIDxwYXRoIGQ9Ik0gMjE1Ljk4MTI5OCA1OS4yNDMxMTYgCkwgNjE3LjY0MTIyOCA1OS4yNDMxMTYgClEgNjIwLjQzOTg1NCA1OS4yNDMxMTYgNjIwLjQzOTg1NCAzMy4xNzE1MzcgCkwgNjIwLjQzOTg1NCA1Ni40NjIxNDcgClEgNjIwLjQzOTg1NCAzMC4zOTA1NjggNjE3LjY0MTIyOCAzMC4zOTA1NjggCkwgMjE1Ljk4MTI5OCAzMC4zOTA1NjggClEgMjEzLjE4MjY3MSAzMC4zOTA1NjggMjEzLjE4MjY3MSA1Ni40NjIxNDcgCkwgMjEzLjE4MjY3MSAzMy4xNzE1MzcgClEgMjEzLjE4MjY3MSA1OS4yNDMxMTYgMjE1Ljk4MTI5OCA1OS4yNDMxMTYgCkwgMjE1Ljk4MTI5OCA1OS4yNDMxMTYgCnoKIiBjbGlwLXBhdGg9InVybCgjcDU5ZDk3NTc0NDkpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjYjIzYTZlOyBzdHJva2Utd2lkdGg6IDEuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzIxIj4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXdlaWdodDogNzAwOyBmb250LXNpemU6IDEwLjVweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydDsgZmlsbDogIzFhMWQyMyIgeD0iNjI0LjYyODQ2NSIgeT0iNDguNzk2MzQyIiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA2MjQuNjI4NDY1IDQ4Ljc5NjM0MikiPjg3LjM8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMjIiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IHN0YXJ0OyBmaWxsOiAjMWExZDIzIiB4PSI1NzUuOTY4MDE1IiB5PSI5Mi4yNDg5NzQiIHRyYW5zZm9ybT0icm90YXRlKC0wIDU3NS45NjgwMTUgOTIuMjQ4OTc0KSI+NzYuOTwvdGV4dD4KICAgPC9nPgogICA8ZyBpZD0idGV4dF8yMyI+CiAgICA8dGV4dCBzdHlsZT0iZm9udC13ZWlnaHQ6IDcwMDsgZm9udC1zaXplOiAxMC41cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogc3RhcnQ7IGZpbGw6ICMxYTFkMjMiIHg9IjU3NS43NzI4NTMiIHk9IjEzNS43MDE2MDUiIHRyYW5zZm9ybT0icm90YXRlKC0wIDU3NS43NzI4NTMgMTM1LjcwMTYwNSkiPjc2Ljg8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMjQiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IHN0YXJ0OyBmaWxsOiAjMWExZDIzIiB4PSI1NzUuNzcyODUzIiB5PSIxNzkuMTU0MjM3IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA1NzUuNzcyODUzIDE3OS4xNTQyMzcpIj43Ni44PC90ZXh0PgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzI1Ij4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXdlaWdodDogNzAwOyBmb250LXNpemU6IDEwLjVweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydDsgZmlsbDogIzFhMWQyMyIgeD0iNTcxLjYwOTM5MiIgeT0iMjIyLjYwNjg2OCIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNTcxLjYwOTM5MiAyMjIuNjA2ODY4KSI+NzUuOTwvdGV4dD4KICAgPC9nPgogICA8ZyBpZD0idGV4dF8yNiI+CiAgICA8dGV4dCBzdHlsZT0iZm9udC13ZWlnaHQ6IDcwMDsgZm9udC1zaXplOiAxMC41cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogc3RhcnQ7IGZpbGw6ICMxYTFkMjMiIHg9IjU1MC40NjY4MTciIHk9IjI2Ni4wNTk1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA1NTAuNDY2ODE3IDI2Ni4wNTk1KSI+NzEuNDwvdGV4dD4KICAgPC9nPgogICA8ZyBpZD0idGV4dF8yNyI+CiAgICA8dGV4dCBzdHlsZT0iZm9udC13ZWlnaHQ6IDcwMDsgZm9udC1zaXplOiAxMC41cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogc3RhcnQ7IGZpbGw6ICMxYTFkMjMiIHg9IjUyMy43OTQ2NDUiIHk9IjMwOS41MTIxMzIiIHRyYW5zZm9ybT0icm90YXRlKC0wIDUyMy43OTQ2NDUgMzA5LjUxMjEzMikiPjY1Ljc8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMjgiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IHN0YXJ0OyBmaWxsOiAjMWExZDIzIiB4PSI1MTYuNjM4Njk2IiB5PSIzNTIuOTY0NzYzIiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA1MTYuNjM4Njk2IDM1Mi45NjQ3NjMpIj42NC4yPC90ZXh0PgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzI5Ij4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXdlaWdodDogNzAwOyBmb250LXNpemU6IDEwLjVweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydDsgZmlsbDogIzFhMWQyMyIgeD0iNTExLjQzNDM3IiB5PSIzOTYuNDE3Mzk1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA1MTEuNDM0MzcgMzk2LjQxNzM5NSkiPjYzLjA8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMzAiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMTAuNXB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IHN0YXJ0OyBmaWxsOiAjMWExZDIzIiB4PSIzNjMuMTExMDczIiB5PSI0MzkuODcwMDI2IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAzNjMuMTExMDczIDQzOS44NzAwMjYpIj4zMS4yPC90ZXh0PgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzMxIj4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXdlaWdodDogNzAwOyBmb250LXNpemU6IDEwLjVweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydDsgZmlsbDogIzFhMWQyMyIgeD0iMzUwLjEwMDI1OCIgeT0iNDgzLjMyMjY1OCIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMzUwLjEwMDI1OCA0ODMuMzIyNjU4KSI+MjguNTwvdGV4dD4KICAgPC9nPgogICA8ZyBpZD0ibGVnZW5kXzEiPgogICAgPGcgaWQ9InRleHRfMzIiPgogICAgIDx0ZXh0IHN0eWxlPSJmb250LXdlaWdodDogNzAwOyBmb250LXNpemU6IDEwLjJweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydDsgZmlsbDogIzFhMWQyMyIgeD0iNzIxLjM4MDI0IiB5PSIyMjkuMzkxOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNzIxLjM4MDI0IDIyOS4zOTE4KSI+TW9kZWwgdHlwZTwvdGV4dD4KICAgIDwvZz4KICAgIDxnIGlkPSJsaW5lMmRfMjUiPgogICAgIDxkZWZzPgogICAgICA8cGF0aCBpZD0ibWYyNDY0ZmY0M2UiIGQ9Ik0gLTUuNSA1LjUgCkwgNS41IDUuNSAKTCA1LjUgLTUuNSAKTCAtNS41IC01LjUgCnoKIiBzdHlsZT0ic3Ryb2tlOiAjYjIzYTZlOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgICAgPC9kZWZzPgogICAgIDxnPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtZjI0NjRmZjQzZSIgeD0iNzMxLjE4MDI0IiB5PSIyNDQuMzY0OCIgc3R5bGU9ImZpbGw6ICNkMTRjODY7IHN0cm9rZTogI2IyM2E2ZTsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzMzIj4KICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiA5LjhweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydCIgeD0iNzQ2Ljg2MDI0IiB5PSIyNDcuNzk0OCIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNzQ2Ljg2MDI0IDI0Ny43OTQ4KSI+RmluZS10dW5lZCAob3Vycyk8L3RleHQ+CiAgICA8L2c+CiAgICA8ZyBpZD0ibGluZTJkXzI2Ij4KICAgICA8ZGVmcz4KICAgICAgPHBhdGggaWQ9Im0zYTdmNzgxNDhlIiBkPSJNIC01LjUgNS41IApMIDUuNSA1LjUgCkwgNS41IC01LjUgCkwgLTUuNSAtNS41IAp6CiIgc3R5bGU9InN0cm9rZTogIzJlODM4ODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICAgIDwvZGVmcz4KICAgICA8Zz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjbTNhN2Y3ODE0OGUiIHg9IjczMS4xODAyNCIgeT0iMjYyLjY0MTgiIHN0eWxlPSJmaWxsOiAjM2U5ZGExOyBzdHJva2U6ICMyZTgzODg7IHN0cm9rZS1saW5lam9pbjogbWl0ZXIiLz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0idGV4dF8zNCI+CiAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogOS44cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLCAnRGVqYVZ1IFNhbnMnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogc3RhcnQiIHg9Ijc0Ni44NjAyNCIgeT0iMjY2LjA3MTgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDc0Ni44NjAyNCAyNjYuMDcxOCkiPkZyb250aWVyIHplcm8tc2hvdDwvdGV4dD4KICAgIDwvZz4KICAgIDxnIGlkPSJsaW5lMmRfMjciPgogICAgIDxkZWZzPgogICAgICA8cGF0aCBpZD0ibWFiZjcwNGUyNDQiIGQ9Ik0gLTUuNSA1LjUgCkwgNS41IDUuNSAKTCA1LjUgLTUuNSAKTCAtNS41IC01LjUgCnoKIiBzdHlsZT0ic3Ryb2tlOiAjMDAwMDAwOyBzdHJva2Utb3BhY2l0eTogMDsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICAgIDwvZGVmcz4KICAgICA8Zz4KICAgICAgPHVzZSB4bGluazpocmVmPSIjbWFiZjcwNGUyNDQiIHg9IjczMS4xODAyNCIgeT0iMjgwLjkxODgiIHN0eWxlPSJmaWxsOiAjYjdkOWRiOyBzdHJva2U6ICMwMDAwMDA7IHN0cm9rZS1vcGFjaXR5OiAwOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9InRleHRfMzUiPgogICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDkuOHB4OyBmb250LWZhbWlseTogJ0hlbHZldGljYSBOZXVlJywgJ0RlamFWdSBTYW5zJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IHN0YXJ0IiB4PSI3NDYuODYwMjQiIHk9IjI4NC4zNDg4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA3NDYuODYwMjQgMjg0LjM0ODgpIj5HYWluIGZyb20gb3B0aW1pemVkIHByb21wdDwvdGV4dD4KICAgIDwvZz4KICAgIDxnIGlkPSJsaW5lMmRfMjgiPgogICAgIDxkZWZzPgogICAgICA8cGF0aCBpZD0ibTBmYmM4NDlkYWUiIGQ9Ik0gLTUuNSA1LjUgCkwgNS41IDUuNSAKTCA1LjUgLTUuNSAKTCAtNS41IC01LjUgCnoKIiBzdHlsZT0ic3Ryb2tlOiAjOGI5M2EwOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgICAgPC9kZWZzPgogICAgIDxnPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMGZiYzg0OWRhZSIgeD0iNzMxLjE4MDI0IiB5PSIyOTkuMTk1OCIgc3R5bGU9ImZpbGw6ICNiNGJhYzQ7IHN0cm9rZTogIzhiOTNhMDsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzM2Ij4KICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiA5LjhweDsgZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsICdEZWphVnUgU2FucycsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydCIgeD0iNzQ2Ljg2MDI0IiB5PSIzMDIuNjI1OCIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNzQ2Ljg2MDI0IDMwMi42MjU4KSI+VW50cmFpbmVkIGJhc2U8L3RleHQ+CiAgICA8L2c+CiAgIDwvZz4KICA8L2c+CiA8L2c+CiA8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9InA1OWQ5NzU3NDQ5Ij4KICAgPHJlY3QgeD0iMjEzLjE5MiIgeT0iMTQuNCIgd2lkdGg9IjQ5NC40MjQiIGhlaWdodD0iNDk1LjM2Ii8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KPC9zdmc+Cg==" alt="Bar chart: the fine-tuned Qwen3.5-9B scores 87.3% of the achievable ceiling, above every frontier model; frontier bars show zero-shot scores in solid teal with a lighter extension for the gain from optimized prompt instructions; untrained open-source bases score lower."></div>
       <figcaption>
         Each frontier bar shows the model's zero-shot score in solid teal; the lighter
@@ -905,7 +884,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="col">
     <section id="results">
-      <p class="kicker">Part V · Results</p>
+      <p class="kicker">Part V</p>
       <h2>Training details</h2>
       <p>
         The training setup was modest. We rented two
@@ -941,7 +920,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="wide">
     <figure class="viz reveal" id="fig-training">
-      <p class="viz-title">Training runs: reward vs. step</p>
+      <p class="viz-title">Training run</p>
       <div class="plot-wrap"><div id="training-chart"></div></div>
       <figcaption>
         Every point is a measured evaluation from the W&amp;B training monitor (two sampled
@@ -985,7 +964,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="col">
     <section id="ownership">
-      <p class="kicker">Part VI · What this buys you</p>
+      <p class="kicker">Part VI</p>
       <h2>What can owning AI do for you?</h2>
       <p>
         Here is the whole experiment in three sentences. We took one high-volume e-commerce
@@ -1007,43 +986,51 @@ specialist model to handle the parts of the workflow that require your internal 
         It is just as important to know where this is the wrong tool. Two questions settle
         most cases: how frequently the task runs, and whether its outcome is verifiable.
       </p>
-      <figure class="viz reveal" id="fig-quadrant">
-        <p class="viz-title">Which tool fits which work</p>
-        <div class="plot-wrap">
-          <svg viewBox="0 0 860 470" role="img" aria-label="Quadrant chart. Vertical axis: outcome verifiability, from non-verifiable to verifiable. Horizontal axis: task frequency, from rare to frequent. Verifiable and frequent work fits a fine-tuned specialist; verifiable but rare work fits a prompt-optimized frontier model; non-verifiable rare work fits a frontier model; non-verifiable frequent work fits a frontier model with human review.">
-            <defs>
-              <marker id="qd-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
-              </marker>
-            </defs>
-            <rect x="115" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
-            <rect x="472" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
-            <rect x="115" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
-            <rect x="472" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
-            <text x="287" y="126" class="row-label" text-anchor="middle">prompt-optimized frontier model</text>
-            <text x="644" y="118" class="row-label" text-anchor="middle" style="fill:var(--accent-text);font-weight:600">fine-tuned specialist</text>
-            <text x="644" y="140" class="annot" text-anchor="middle">owned, practiced, cheap at scale</text>
-            <text x="287" y="318" class="row-label" text-anchor="middle">frontier model</text>
-            <text x="644" y="318" class="row-label" text-anchor="middle">frontier model + human review</text>
-            <line x1="95" y1="402" x2="95" y2="38" stroke="var(--mute)" marker-end="url(#qd-a)"/>
-            <text x="88" y="52" class="annot" text-anchor="end">verifiable</text>
-            <text x="88" y="398" class="annot" text-anchor="end">non-verifiable</text>
-            <line x1="115" y1="428" x2="822" y2="428" stroke="var(--mute)" marker-end="url(#qd-a)"/>
-            <text x="115" y="454" class="annot">rare</text>
-            <text x="466" y="454" class="annot" text-anchor="middle">task frequency</text>
-            <text x="817" y="454" class="annot" text-anchor="end">frequent</text>
-          </svg>
-        </div>
-        <figcaption>
-          The upper right is where fine-tuning pays: frequent work with verifiable outcomes.
-          Everything else is better rented: a prompt-optimized frontier model covers
-          verifiable but rare work, and a human stays in the loop where outcomes can't be
-          verified. When
-          the problem is changing facts rather than judgment, retrieval is the fix at any
-          volume. The checklist below condenses the upper-right conditions into something you
-          can hold your own workflows against:
-        </figcaption>
-      </figure>
+    </section>
+  </div>
+
+  <div class="wide">
+    <figure class="viz reveal" id="fig-quadrant">
+      <p class="viz-title">Right tool for the right-shaped problem</p>
+      <div class="plot-wrap">
+        <svg viewBox="-22 0 882 470" role="img" aria-label="Quadrant chart. Vertical axis: outcome verifiability, from non-verifiable to verifiable. Horizontal axis: task frequency, from rare to frequent. Verifiable and frequent work fits a fine-tuned specialist; verifiable but rare work fits a prompt-optimized frontier model; non-verifiable rare work fits a frontier model; non-verifiable frequent work fits a frontier model with human review.">
+          <defs>
+            <marker id="qd-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
+            </marker>
+          </defs>
+          <rect x="115" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
+          <rect x="472" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
+          <rect x="115" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
+          <rect x="472" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
+          <text x="287" y="126" class="row-label" text-anchor="middle">prompt-optimized frontier model</text>
+          <text x="644" y="118" class="row-label" text-anchor="middle" style="fill:var(--accent-text);font-weight:600">fine-tuned specialist</text>
+          <text x="644" y="140" class="annot" text-anchor="middle">owned, practiced, cheap at scale</text>
+          <text x="287" y="318" class="row-label" text-anchor="middle">frontier model</text>
+          <text x="644" y="318" class="row-label" text-anchor="middle">frontier model + human review</text>
+          <line x1="95" y1="402" x2="95" y2="38" stroke="var(--mute)" marker-end="url(#qd-a)"/>
+          <text x="88" y="52" class="annot" text-anchor="end">verifiable</text>
+          <text x="88" y="398" class="annot" text-anchor="end">non-verifiable</text>
+          <line x1="115" y1="428" x2="822" y2="428" stroke="var(--mute)" marker-end="url(#qd-a)"/>
+          <text x="115" y="454" class="annot">rare</text>
+          <text x="466" y="454" class="annot" text-anchor="middle">task frequency</text>
+          <text x="817" y="454" class="annot" text-anchor="end">frequent</text>
+        </svg>
+      </div>
+      <figcaption>
+        The upper right is where fine-tuning pays: frequent work with verifiable outcomes.
+        Everything else is better rented: a prompt-optimized frontier model covers
+        verifiable but rare work, and a human stays in the loop where outcomes can't be
+        verified. When
+        the problem is changing facts rather than judgment, retrieval is the fix at any
+        volume. The checklist below condenses the upper-right conditions into something you
+        can hold your own workflows against:
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <section id="ownership-2">
       <div class="checklist">
         <h3>Your workflow is a fine-tuning candidate if at least one point applies…</h3>
         <ul>
@@ -1074,7 +1061,6 @@ specialist model to handle the parts of the workflow that require your internal 
     </section>
 
     <section class="cta-panel" id="book">
-      <p class="kicker" style="margin-top:0">Work with us</p>
       <h2>See these numbers on your workflow</h2>
       <p>
         Sounds like something that would help your business? Book a call and we'll help you
@@ -1084,6 +1070,81 @@ specialist model to handle the parts of the workflow that require your internal 
       <p class="cta-note">Want to try the models yourself? They're on <a href="https://huggingface.co/BosonicJustin" style="color:inherit">Hugging Face</a>.</p>
     </section>
 
+  </div>
+
+  <div class="wide">
+    <section class="appendix" id="appendix">
+      <p class="kicker" style="margin-top:0">Appendix</p>
+      <h2>The track record: task-trained specialists vs. prompted frontier models</h2>
+      <p class="appendix-intro">
+        Beyond the flagships, the same shape repeats across industries. Every result below is
+        the company's own reported figure against the frontier model it was replacing or
+        competing with; each company name links to the write-up it came from.
+      </p>
+      <div class="tbl-wrap">
+        <table class="data track">
+          <colgroup>
+            <col><col class="c-what"><col class="c-result"><col class="c-payoff">
+          </colgroup>
+          <thead>
+            <tr><th>Company</th><th>What the model does</th><th>Result</th><th>Business payoff</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-th="Company"><a href="https://cognition.ai/blog/swe-1-7">Cognition</a></td>
+              <td data-th="What the model does">Writes and fixes software in production</td>
+              <td data-th="Result">Beats GPT-5.5 on a standard coding benchmark</td>
+              <td data-th="Business payoff">Frontier-level output at a fraction of the serving cost, streaming 1,000 tokens per second</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.adaptive-ml.com/post/how-att-saves-millions-with-specialized-language-models">AT&amp;T</a></td>
+              <td data-th="What the model does">Summarizes 900k support calls a day and flags personal data</td>
+              <td data-th="Result">17% better than GPT-4o at catching personal data</td>
+              <td data-th="Business payoff">Reviews fraud cases 12× faster at GPT-4o accuracy; saves millions of dollars annually</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform">LinkedIn</a></td>
+              <td data-th="What the model does">Matches candidates to job openings</td>
+              <td data-th="Result">4% more accurate than the GPT model it replaced</td>
+              <td data-th="Business payoff">75× cheaper than GPT-4.6× cheaper than GPT-4o</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.ambiencehealthcare.com/blog/ambience-healthcare-s-ai-platform-surpasses-clinician-performance-by-27-in-medical-coding-powered-by-new-openai-breakthrough">Ambience Healthcare</a></td>
+              <td data-th="What the model does">Assigns medical billing codes</td>
+              <td data-th="Result">More accurate than 18 board-certified physicians on a gold-panel test</td>
+              <td data-th="Business payoff">12 points ahead of prompted o4-mini, the OpenAI model it was built from</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://venturebeat.com/business/phonelys-new-ai-agents-hit-99-accuracy-and-customers-cant-tell-theyre-not-human">Phonely</a></td>
+              <td data-th="What the model does">Answers customer phone calls</td>
+              <td data-th="Result">99.2% accuracy vs GPT-4o's 94.7%</td>
+              <td data-th="Business payoff">Responses 73% faster than its previous GPT-4o setup; one customer replaced 350 human agents in a month</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://openpipe.ai/blog/art-e-mail-agent">OpenPipe</a></td>
+              <td data-th="What the model does">Handles email and support tickets</td>
+              <td data-th="Result">93% on support QA where OpenAI's o3 scored 50%</td>
+              <td data-th="Business payoff">64× cheaper and 5× faster to run than o3</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.perplexity.ai/hub/blog/meet-new-sonar">Perplexity</a></td>
+              <td data-th="What the model does">Answers search queries with sources</td>
+              <td data-th="Result">Matches GPT-4o in blind user tests</td>
+              <td data-th="Business payoff">10× the speed of GPT-4o at a fraction of the price</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://21944583.fs1.hubspotusercontent-na1.net/hubfs/21944583/Webinar%20Files/LLMOps%20Micro-Summit_%20Checkr%20-%20Streamlining%20Background%20Checks%20with%20a%20Fine-tuned%20Classifier%20on%20Predibase.pdf">Checkr</a></td>
+              <td data-th="What the model does">Classifies criminal-record entries in background checks</td>
+              <td data-th="Result">Beats GPT-4 on the hardest cases</td>
+              <td data-th="Business payoff">5× cheaper and 30× faster than its previous GPT-4 setup</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="col">
     <section class="footnotes" id="footnotes">
       <p class="kicker" style="margin-top:0">Sources &amp; notes</p>
       <ol>
@@ -1115,27 +1176,6 @@ specialist model to handle the parts of the workflow that require your internal 
           <a href="https://appliedcompute.com/case-studies/doordash">DoorDash &times; Applied Compute</a>,
           <a href="https://shopify.engineering/fine-tuning-agent-shopify-flow">Shopify Flow agent</a>.</li>
       </ol>
-      <p>
-        All benchmark numbers come from the open
-        <a href="https://github.com/BosonicJustin/e_commerce_env">catalog-integrity environment</a>:
-        200 stratified validation episodes, seed 0, identical system prompt, tools, turn budget,
-        and scorer across every model. Achievable ceiling on this episode mix ≈ 0.717. The trained
-        model's 0.626 (87%) is its <em>conservative</em> score: measured through a generic chat
-        harness that under-renders it, while frontier models ran with native tool-calling; in its
-        designed serving path it evaluates at ≈0.67 (93%).
-      </p>
-      <p>
-        Design choices that could have flattered us, disclosed. We chose the task ourselves,
-        and we chose it because it is exactly the kind of workflow fine-tuning should win: this
-        is a demonstration of the favorable case, not a survey of tasks. All eight frontier
-        configurations ran with one shared system prompt and identical tool schemas, with no
-        per-model branching, and the workflow-guide appendix contains no protected brand names,
-        no dataset episodes, and no scoring internals. The 200-episode mix is 154 clean, 31
-        image-mismatch, 8 legitimate-brand hard negatives, and 7 counterfeit cases, drawn with
-        a fixed seed. All numbers are single evaluation runs without confidence intervals, and
-        the benchmark uses the validation split; an untouched test split is reserved for the
-        final published version.
-      </p>
     </section>
   </div>
 </article>
