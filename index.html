@@ -361,6 +361,43 @@
   table.data td { border-bottom: 1px solid var(--rule); padding: 10px 16px 10px 0; vertical-align: top; }
   table.data td:first-child { white-space: nowrap; font-weight: 600; vertical-align: middle; }
 
+  /* ---------- appendix: reference table, out of the narrative ---------- */
+  .appendix { border-top: 2px solid var(--ink); margin: 64px 0 0; padding-top: 22px; }
+  .appendix h2 { font-size: clamp(21px, 2.4vw, 25px); margin-bottom: 10px; }
+  .appendix-intro { font-size: 15.5px; line-height: 1.55; color: var(--mute); max-width: 68ch; }
+  table.data.track { min-width: 720px; font-size: 14px; }
+  table.data.track th { padding: 0 18px 8px 0; }
+  table.data.track td { padding: 13px 18px 13px 0; }
+  table.data.track th:last-child, table.data.track td:last-child { padding-right: 0; }
+  /* company column carries the link; let long names wrap rather than widen the table */
+  table.data.track td:first-child { white-space: normal; vertical-align: top; }
+  table.data.track td:first-child a { text-decoration-color: var(--teal-text); color: var(--teal-text); }
+  table.data.track tbody tr:hover td { background: var(--paper-2); }
+  table.data.track col.c-what { width: 24%; }
+  table.data.track col.c-result { width: 26%; }
+  table.data.track col.c-payoff { width: 34%; }
+  /* below the table's comfortable measure, each row becomes its own labelled block */
+  @media (max-width: 720px) {
+    table.data.track, table.data.track tbody, table.data.track tr, table.data.track td { display: block; width: auto; }
+    table.data.track { min-width: 0; }
+    table.data.track thead { display: none; }
+    table.data.track tbody tr {
+      border: 1px solid var(--rule); border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 12px; background: var(--card);
+    }
+    table.data.track td { border-bottom: none; padding: 0 0 10px; }
+    table.data.track td:last-child { padding-bottom: 0; }
+    table.data.track td::before {
+      content: attr(data-th); display: block;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--mute); font-weight: 600; margin-bottom: 2px;
+    }
+    table.data.track td:first-child::before { display: none; }
+    table.data.track td:first-child { font-size: 16px; font-weight: 600; padding-bottom: 12px; }
+    table.data.track tbody tr:hover td { background: none; }
+  }
+
   /* ---------- CTA: inverted closing band ---------- */
   .cta-panel {
     background: var(--ink); color: var(--paper);
@@ -599,73 +636,13 @@ specialist model to handle the parts of the workflow that require your internal 
         more issues than the best frontier models while being cheaper to run</a>.
       </p>
       <p>
-        Beyond the flagships, the same shape repeats across industries:
+        The same shape repeats well beyond these three. The
+        <a href="#appendix">appendix</a> collects eight more deployments, with what each
+        model was trained to do and what changed once it shipped.
       </p>
     </section>
   </div>
 
-  <div class="wide">
-    <figure class="viz reveal" id="case-table">
-      <p class="viz-title">The track record: task-trained specialists vs. prompted frontier models</p>
-      <div class="tbl-wrap">
-        <table class="data">
-          <thead>
-            <tr><th>Company</th><th>What the model does</th><th>Result</th><th>Business payoff</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a href="https://cognition.ai/blog/swe-1-7">Cognition</a></td>
-              <td>Writes and fixes software in production</td>
-              <td>Beats GPT-5.5 on a standard coding benchmark</td>
-              <td>Frontier-level output at a fraction of the serving cost, streaming 1,000 tokens per second</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.adaptive-ml.com/post/how-att-saves-millions-with-specialized-language-models">AT&amp;T</a></td>
-              <td>Summarizes 900k support calls a day and flags personal data</td>
-              <td>17% better than GPT-4o at catching personal data</td>
-              <td>Reviews fraud cases 12× faster at GPT-4o accuracy; saves millions of dollars annually</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform">LinkedIn</a></td>
-              <td>Matches candidates to job openings</td>
-              <td>4% more accurate than the GPT model it replaced</td>
-              <td>75× cheaper than GPT-4.6× cheaper than GPT-4o</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.ambiencehealthcare.com/blog/ambience-healthcare-s-ai-platform-surpasses-clinician-performance-by-27-in-medical-coding-powered-by-new-openai-breakthrough">Ambience Healthcare</a></td>
-              <td>Assigns medical billing codes</td>
-              <td>More accurate than 18 board-certified physicians on a gold-panel test</td>
-              <td>12 points ahead of prompted o4-mini, the OpenAI model it was built from</td>
-            </tr>
-            <tr>
-              <td><a href="https://venturebeat.com/business/phonelys-new-ai-agents-hit-99-accuracy-and-customers-cant-tell-theyre-not-human">Phonely</a></td>
-              <td>Answers customer phone calls</td>
-              <td>99.2% accuracy vs GPT-4o's 94.7%</td>
-              <td>Responses 73% faster than its previous GPT-4o setup; one customer replaced 350 human agents in a month</td>
-            </tr>
-            <tr>
-              <td><a href="https://openpipe.ai/blog/art-e-mail-agent">OpenPipe</a></td>
-              <td>Handles email and support tickets</td>
-              <td>93% on support QA where OpenAI's o3 scored 50%</td>
-              <td>64× cheaper and 5× faster to run than o3</td>
-            </tr>
-            <tr>
-              <td><a href="https://www.perplexity.ai/hub/blog/meet-new-sonar">Perplexity</a></td>
-              <td>Answers search queries with sources</td>
-              <td>Matches GPT-4o in blind user tests</td>
-              <td>10× the speed of GPT-4o at a fraction of the price</td>
-            </tr>
-            <tr>
-              <td><a href="https://21944583.fs1.hubspotusercontent-na1.net/hubfs/21944583/Webinar%20Files/LLMOps%20Micro-Summit_%20Checkr%20-%20Streamlining%20Background%20Checks%20with%20a%20Fine-tuned%20Classifier%20on%20Predibase.pdf">Checkr</a></td>
-              <td>Classifies criminal-record entries in background checks</td>
-              <td>Beats GPT-4 on the hardest cases</td>
-              <td>5× cheaper and 30× faster than its previous GPT-4 setup</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </figure>
-  </div>
 
   <div class="col">
     <section id="ecommerce-lineage">
@@ -1076,6 +1053,81 @@ specialist model to handle the parts of the workflow that require your internal 
       <p class="cta-note">Want to try the models yourself? They're on <a href="https://huggingface.co/BosonicJustin" style="color:inherit">Hugging Face</a>.</p>
     </section>
 
+  </div>
+
+  <div class="wide">
+    <section class="appendix" id="appendix">
+      <p class="kicker" style="margin-top:0">Appendix</p>
+      <h2>The track record: task-trained specialists vs. prompted frontier models</h2>
+      <p class="appendix-intro">
+        Beyond the flagships, the same shape repeats across industries. Every result below is
+        the company's own reported figure against the frontier model it was replacing or
+        competing with; each company name links to the write-up it came from.
+      </p>
+      <div class="tbl-wrap">
+        <table class="data track">
+          <colgroup>
+            <col><col class="c-what"><col class="c-result"><col class="c-payoff">
+          </colgroup>
+          <thead>
+            <tr><th>Company</th><th>What the model does</th><th>Result</th><th>Business payoff</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-th="Company"><a href="https://cognition.ai/blog/swe-1-7">Cognition</a></td>
+              <td data-th="What the model does">Writes and fixes software in production</td>
+              <td data-th="Result">Beats GPT-5.5 on a standard coding benchmark</td>
+              <td data-th="Business payoff">Frontier-level output at a fraction of the serving cost, streaming 1,000 tokens per second</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.adaptive-ml.com/post/how-att-saves-millions-with-specialized-language-models">AT&amp;T</a></td>
+              <td data-th="What the model does">Summarizes 900k support calls a day and flags personal data</td>
+              <td data-th="Result">17% better than GPT-4o at catching personal data</td>
+              <td data-th="Business payoff">Reviews fraud cases 12× faster at GPT-4o accuracy; saves millions of dollars annually</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform">LinkedIn</a></td>
+              <td data-th="What the model does">Matches candidates to job openings</td>
+              <td data-th="Result">4% more accurate than the GPT model it replaced</td>
+              <td data-th="Business payoff">75× cheaper than GPT-4.6× cheaper than GPT-4o</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.ambiencehealthcare.com/blog/ambience-healthcare-s-ai-platform-surpasses-clinician-performance-by-27-in-medical-coding-powered-by-new-openai-breakthrough">Ambience Healthcare</a></td>
+              <td data-th="What the model does">Assigns medical billing codes</td>
+              <td data-th="Result">More accurate than 18 board-certified physicians on a gold-panel test</td>
+              <td data-th="Business payoff">12 points ahead of prompted o4-mini, the OpenAI model it was built from</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://venturebeat.com/business/phonelys-new-ai-agents-hit-99-accuracy-and-customers-cant-tell-theyre-not-human">Phonely</a></td>
+              <td data-th="What the model does">Answers customer phone calls</td>
+              <td data-th="Result">99.2% accuracy vs GPT-4o's 94.7%</td>
+              <td data-th="Business payoff">Responses 73% faster than its previous GPT-4o setup; one customer replaced 350 human agents in a month</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://openpipe.ai/blog/art-e-mail-agent">OpenPipe</a></td>
+              <td data-th="What the model does">Handles email and support tickets</td>
+              <td data-th="Result">93% on support QA where OpenAI's o3 scored 50%</td>
+              <td data-th="Business payoff">64× cheaper and 5× faster to run than o3</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://www.perplexity.ai/hub/blog/meet-new-sonar">Perplexity</a></td>
+              <td data-th="What the model does">Answers search queries with sources</td>
+              <td data-th="Result">Matches GPT-4o in blind user tests</td>
+              <td data-th="Business payoff">10× the speed of GPT-4o at a fraction of the price</td>
+            </tr>
+            <tr>
+              <td data-th="Company"><a href="https://21944583.fs1.hubspotusercontent-na1.net/hubfs/21944583/Webinar%20Files/LLMOps%20Micro-Summit_%20Checkr%20-%20Streamlining%20Background%20Checks%20with%20a%20Fine-tuned%20Classifier%20on%20Predibase.pdf">Checkr</a></td>
+              <td data-th="What the model does">Classifies criminal-record entries in background checks</td>
+              <td data-th="Result">Beats GPT-4 on the hardest cases</td>
+              <td data-th="Business payoff">5× cheaper and 30× faster than its previous GPT-4 setup</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="col">
     <section class="footnotes" id="footnotes">
       <p class="kicker" style="margin-top:0">Sources &amp; notes</p>
       <ol>
