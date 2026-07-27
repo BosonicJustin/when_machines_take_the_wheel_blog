@@ -58,7 +58,7 @@ XLO, XHI, YLO, YHI = 0.055, 320, 22, 104
 # oracle ceiling
 ax.axhline(100, color="#9AA1AC", lw=1.2, ls=(0, (5, 4)), zorder=1)
 ax.text(XHI / 1.03, 100.7, "oracle ceiling (best any model could do)",
-        color=MUTE, fontsize=8.8, ha="right", va="bottom")
+        color=MUTE, fontsize=12.8, ha="right", va="bottom")
 
 # training arrow: base 9B -> trained 9B at the same cost.
 # shrink ends in POINTS by each marker's radius (+gap) so the head stops just
@@ -67,7 +67,7 @@ ax.annotate("", xy=(0.50, 0.626 * N), xytext=(0.50, 0.460 * N),
             arrowprops=dict(arrowstyle="-|>", color=COL_EDGE["trained"], lw=1.8,
                             shrinkA=9, shrinkB=18), zorder=4)
 ax.text(0.62, 76.0, "+23 pts, same cost", rotation=90, ha="center", va="center",
-        fontsize=8.6, fontweight="bold", color=COL_EDGE["trained"], zorder=7)
+        fontsize=12.5, fontweight="bold", color=COL_EDGE["trained"], zorder=7)
 
 # points
 for label, r, cost, tier in pts:
@@ -103,26 +103,26 @@ for label, r, cost, tier in pts:
         size = label.split("-")[-1]
         ax.annotate(f"{size}\n{money(cost)} · {ypc:.0f}%", (cost, ypc),
                     textcoords="offset points", xytext=(dx, dy), ha=ha, va=va,
-                    fontsize=8.3, color=MUTE, linespacing=1.3, zorder=7)
+                    fontsize=12.0, color=MUTE, linespacing=1.3, zorder=7)
     else:
         weight = "bold" if tier == "trained" else "normal"
         color = COL_EDGE["trained"] if tier == "trained" else INK
         ax.annotate(f"{label}\n{money(cost)} / 1k  ·  {ypc:.0f}%", (cost, ypc),
                     textcoords="offset points", xytext=(dx, dy), ha=ha, va=va,
-                    fontsize=9.4, fontweight=weight, color=color, linespacing=1.35,
+                    fontsize=13.6, fontweight=weight, color=color, linespacing=1.35,
                     zorder=7)
 
 # axes
 ax.set_xlim(XLO, XHI)
 ax.set_ylim(YLO, YHI)
-ax.set_xlabel("Cost per 1,000 listings  (USD, log scale)", fontsize=11.5,
+ax.set_xlabel("Cost per 1,000 listings  (USD, log scale)", fontsize=16.7,
               color=INK, labelpad=9)
-ax.set_ylabel("Average % of maximum achievable task score", fontsize=11.5,
+ax.set_ylabel("Average % of maximum achievable task score", fontsize=16.7,
               color=INK, labelpad=9)
 ax.set_xticks([0.1, 0.3, 1, 3, 10, 30, 100, 300])
 ax.get_xaxis().set_major_formatter(plt.FuncFormatter(lambda v, _: f"${v:g}"))
 ax.set_yticks([30, 40, 50, 60, 70, 80, 90, 100])
-ax.tick_params(colors=MUTE, labelsize=10, length=0)
+ax.tick_params(colors=MUTE, labelsize=14.5, length=0)
 ax.grid(axis="y", color=GRID, lw=0.9, zorder=0)
 ax.grid(axis="x", which="major", color=GRID, lw=0.9, zorder=0)
 ax.grid(axis="x", which="minor", color="#F4F5F7", lw=0.6, zorder=0)
@@ -142,7 +142,7 @@ handles = [
     plt.Line2D([0], [0], marker="o", ls="", ms=9, mfc=COL["base"],
                mec=COL_EDGE["base"], label="Untrained open models"),
 ]
-leg = ax.legend(handles=handles, loc="lower right", frameon=True, fontsize=9.8,
+leg = ax.legend(handles=handles, loc="lower right", frameon=True, fontsize=14.2,
                 title="Model type", labelspacing=0.8, handletextpad=0.6,
                 borderpad=1.0, borderaxespad=1.2)
 leg.get_title().set_fontsize(10.4)

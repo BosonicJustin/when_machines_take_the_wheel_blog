@@ -66,7 +66,7 @@ rbox(tx, ty, tw, th, "#FFFFFF", BOXEDGE, 1.2, rs=0.013, z=3)
 hh = dy(0.24)
 rbox(tx, ty + th - hh, tw, hh, TEAL, TEAL, 0, rs=0.013, z=4)
 ax.text(tx + tw / 2, ty + th - hh / 2, "LISTING", ha="center", va="center",
-        color="white", fontsize=7.8, fontweight="bold", zorder=5)
+        color="white", fontsize=11.3, fontweight="bold", zorder=5)
 # product photo: the actual work-gloves image, resized into the card (square)
 imh = dy(0.68)
 imw = imh * (AXH / AXW)
@@ -88,9 +88,9 @@ for i, (t, col, wt, fs) in enumerate(tl):
     ax.text(tx + dx(0.2), ty0 - i * dy(0.2), t, ha="left", va="center",
             color=col, fontsize=fs, fontweight=wt, zorder=8)
 ax.text(tx + tw / 2, ty - 0.036, "A task", ha="center", va="center",
-        fontsize=11.5, fontweight="bold", color=INK)
+        fontsize=16.7, fontweight="bold", color=INK)
 ax.text(tx + tw / 2, ty - 0.068, "one product listing", ha="center", va="center",
-        fontsize=8.8, color=MUTE)
+        fontsize=12.8, color=MUTE)
 
 # ---------------------------------------------------------------- 2. ROBOT model
 mw, mh = 0.118, 0.25
@@ -109,23 +109,23 @@ def draw_robot(cx, cy):
     rbox(cx - dx(0.19), cy - dy(0.2), dx(0.38), dy(0.09), TEAL, TEAL, 0, rs=dy(0.035), z=5)
 
 draw_robot(mcx, my + mh * 0.6)
-ax.text(mcx, my + mh * 0.17, "MODEL", ha="center", va="center", fontsize=11,
+ax.text(mcx, my + mh * 0.17, "MODEL", ha="center", va="center", fontsize=15.9,
         fontweight="bold", color=TEAL_D, zorder=5)
 arrow((tx + tw + 0.004, CY), (mx - 0.004, CY), "#9AA1AC", 1.8)
 ax.text((tx + tw + mx) / 2, CY + 0.05, "give it\na task", ha="center", va="center",
-        fontsize=8.2, color=MUTE, linespacing=1.35, zorder=4)
+        fontsize=11.9, color=MUTE, linespacing=1.35, zorder=4)
 
 # ------------------------------------ single clear arrow: model -> group panel
 arrow((mx + mw + 0.004, CY), (gx0 - 0.004, CY), TEAL_D, 2.4, ms=18)
 ax.text((mx + mw + gx0) / 2, CY + 0.048, "N attempts,", ha="center", va="center",
-        fontsize=9, color=TEAL_D, fontweight="bold", zorder=4)
+        fontsize=13.0, color=TEAL_D, fontweight="bold", zorder=4)
 ax.text((mx + mw + gx0) / 2, CY + 0.024, "each auto-scored", ha="center",
-        va="center", fontsize=8.6, color=MUTE, zorder=4)
+        va="center", fontsize=12.5, color=MUTE, zorder=4)
 
 # ---------------------------------------------- group panel (attempts + scores)
 rbox(gx0, gy0, gx1 - gx0, gy1 - gy0, "#FCFCFD", BOXEDGE, 1.1, rs=0.015, z=1)
 ax.text((gx0 + gx1) / 2, gy1 - 0.032, "N attempts: the “group”", ha="center",
-        va="center", fontsize=11, fontweight="bold", color=INK, zorder=4)
+        va="center", fontsize=15.9, fontweight="bold", color=INK, zorder=4)
 
 scores = [0.83, 0.72, 0.64, 0.55, 0.38, 0.33]
 avg = float(np.mean(scores))
@@ -142,29 +142,29 @@ for s, y in zip(scores, ys):
         rbox(ticket_x + 0.012 + k * 0.019, y + ticket_h / 2 - 0.0072, 0.013, 0.0145,
              cl, cd, 0.6, rs=0.004, z=4)
     ax.text(ticket_x + 0.074, y + ticket_h / 2, "a full attempt", ha="left",
-            va="center", fontsize=7.6, color=MUTE, zorder=4)
+            va="center", fontsize=11.0, color=MUTE, zorder=4)
     rbox(pill_x, y + ticket_h / 2 - 0.018, pill_w, 0.036, c, cd, 0.8, rs=0.02, z=4)
     ax.text(pill_x + pill_w / 2, y + ticket_h / 2, f"{s:.2f}", ha="center",
-            va="center", fontsize=8.8, fontweight="bold", color="white", zorder=5)
+            va="center", fontsize=12.8, fontweight="bold", color="white", zorder=5)
 
 avg_y = (ys[2] + ys[3]) / 2 + ticket_h / 2
 ax.plot([ticket_x - 0.006, gx1 - 0.012], [avg_y, avg_y], ls=(0, (4, 3)),
         color=INK, lw=1.3, zorder=6)
 ax.text(gx1 - 0.012, avg_y - 0.016, "group average", ha="right", va="top",
-        fontsize=8, color=INK, zorder=6)
+        fontsize=11.6, color=INK, zorder=6)
 
 rx = gx1 + 0.024
 top_mid, bot_mid = (ys[0] + ys[2]) / 2 + ticket_h / 2, (ys[3] + ys[5]) / 2 + ticket_h / 2
 ax.scatter([rx], [top_mid + 0.013], marker="^", s=72, c=PINK, edgecolors="none", zorder=5)
 ax.text(rx + 0.014, top_mid + 0.013, "reinforced", ha="left", va="center",
-        fontsize=9.2, fontweight="bold", color=PINK_D, zorder=5)
+        fontsize=13.3, fontweight="bold", color=PINK_D, zorder=5)
 ax.text(rx + 0.038, top_mid - 0.02, "beat the average", ha="center", va="center",
-        fontsize=8, color=INK, zorder=5)
+        fontsize=11.6, color=INK, zorder=5)
 ax.scatter([rx], [bot_mid + 0.013], marker="v", s=72, c=GRAY, edgecolors="none", zorder=5)
 ax.text(rx + 0.014, bot_mid + 0.013, "discouraged", ha="left", va="center",
-        fontsize=9.2, fontweight="bold", color=GRAY_D, zorder=5)
+        fontsize=13.3, fontweight="bold", color=GRAY_D, zorder=5)
 ax.text(rx + 0.043, bot_mid - 0.02, "below the average", ha="center", va="center",
-        fontsize=8, color=INK, zorder=5)
+        fontsize=11.6, color=INK, zorder=5)
 
 # ------------------------------------ UPDATE feedback (U-shaped return path)
 px, yc = (gx0 + gx1) / 2, 0.185
@@ -174,21 +174,17 @@ ax.plot([px, mcx], [yc, yc], color=PINK_D, lw=2.1, zorder=2, solid_capstyle="rou
 ax.add_patch(FancyArrowPatch((mcx, yc), (mcx, my - 0.006), arrowstyle="-|>",
              mutation_scale=17, color=PINK_D, lw=2.1, shrinkA=0, shrinkB=0, zorder=2))
 lcx = (px + mcx) / 2
-ax.text(lcx, yc, "Update the model", ha="center", va="center", fontsize=12.5,
+ax.text(lcx, yc, "Update the model", ha="center", va="center", fontsize=18.1,
         fontweight="bold", color=PINK_D, zorder=6,
         bbox=dict(facecolor=FACE, edgecolor="none", pad=5))
 ax.text(lcx, yc - 0.05,
         "make above-average attempts more likely, below-average less likely",
-        ha="center", va="center", fontsize=9.4, color=MUTE, zorder=6)
-
-# ---------------------------------------------------------------- title
-fig.text(0.5, 0.955, "How the model learns: GRPO", fontsize=20,
-         fontweight="bold", color=INK, ha="center", va="top")
+        ha="center", va="center", fontsize=13.6, color=MUTE, zorder=6)
 
 plt.subplots_adjust(left=0.005, right=0.995, top=0.995, bottom=0.005)
 
-base = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-for ext in ("png", "svg", "pdf"):
-    p = os.path.join(base, f"benchmarks/figures/grpo_explainer.{ext}")
+base = os.path.dirname(os.path.abspath(__file__))
+for ext in ("png", "svg"):
+    p = os.path.join(base, f"grpo_explainer.{ext}")
     fig.savefig(p, dpi=300, facecolor=FACE)
     print("wrote", p)

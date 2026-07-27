@@ -59,9 +59,9 @@ ax.set_facecolor(FACE)
 # frontier plateau band + oracle ceiling (=100)
 ax.axvspan(P_LO, P_HI, color="#3E9DA1", alpha=0.06, zorder=0)
 ax.text((P_LO + P_HI) / 2, len(rows) - 0.32, "frontier plateau", color="#2E8388",
-        fontsize=8.5, style="italic", ha="center", va="center", alpha=0.9)
+        fontsize=12.3, style="italic", ha="center", va="center", alpha=0.9)
 ax.axvline(100, color="#9AA1AC", lw=1.2, ls=(0, (5, 4)), zorder=1)
-ax.text(100 - 0.7, 4.6, "oracle ceiling (100%)", color=MUTE, fontsize=9,
+ax.text(100 - 0.7, 4.6, "oracle ceiling (100%)", color=MUTE, fontsize=13.0,
         ha="right", va="center", rotation=90)
 
 BH = 0.62
@@ -73,7 +73,7 @@ for yi, z, o, t in zip(y, zeros, opts, tiers):
         ax.barh(yi, o - z, left=z, height=BH, color=COL["frontier"],
                 alpha=0.32, edgecolor="none", zorder=3)
         end = o
-    ax.text(end + 0.9, yi, f"{end:.1f}", va="center", ha="left", fontsize=10.5,
+    ax.text(end + 0.9, yi, f"{end:.1f}", va="center", ha="left", fontsize=15.2,
             fontweight="bold", color=INK, zorder=5)
 
 hero_y = y[0]
@@ -83,7 +83,7 @@ ax.add_patch(FancyBboxPatch(
     fill=False, edgecolor=COL_EDGE["trained"], linewidth=1.8, zorder=4))
 
 ax.set_yticks(y)
-ax.set_yticklabels(labels, fontsize=10.5, color=INK)
+ax.set_yticklabels(labels, fontsize=15.2, color=INK)
 for tick, t in zip(ax.get_yticklabels(), tiers):
     if t == "trained":
         tick.set_color(COL_EDGE["trained"]); tick.set_fontweight("bold")
@@ -92,10 +92,10 @@ for tick, t in zip(ax.get_yticklabels(), tiers):
 
 ax.set_xlim(0, 106)
 ax.set_ylim(-0.7, len(rows) - 0.3)
-ax.set_xlabel("Average % of maximum achievable task score", fontsize=11.5,
+ax.set_xlabel("Average % of maximum achievable task score", fontsize=16.7,
               color=INK, labelpad=9)
 ax.set_xticks([0, 20, 40, 60, 80, 100])
-ax.tick_params(axis="x", colors=MUTE, labelsize=10, length=0)
+ax.tick_params(axis="x", colors=MUTE, labelsize=14.5, length=0)
 ax.tick_params(axis="y", length=0)
 ax.grid(axis="x", color=GRID, lw=0.9, zorder=0)
 ax.set_axisbelow(True)
@@ -114,15 +114,11 @@ handles = [
     plt.Line2D([0], [0], marker="s", ls="", ms=11, mfc=COL["base"],
                mec=COL_EDGE["base"], label="Untrained base"),
 ]
-leg = ax.legend(handles=handles, loc="center left", bbox_to_anchor=(1.01, 0.5),
-                frameon=False, fontsize=9.8, title="Model type",
-                labelspacing=0.7, handletextpad=0.6)
-leg.get_title().set_fontsize(10.2)
-leg.get_title().set_fontweight("bold")
-leg.get_title().set_color(INK)
-leg._legend_box.align = "left"
+leg = ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.14),
+                frameon=False, fontsize=14.2, ncol=2,
+                columnspacing=2.2, labelspacing=0.7, handletextpad=0.6)
 
-plt.subplots_adjust(left=0.235, right=0.78, top=0.975, bottom=0.115)
+plt.subplots_adjust(left=0.30, right=0.975, top=0.97, bottom=0.26)
 
 base = os.path.dirname(os.path.abspath(__file__))
 for ext in ("png", "svg"):
