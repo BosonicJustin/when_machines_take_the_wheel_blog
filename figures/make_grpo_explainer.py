@@ -56,17 +56,17 @@ def arrow(p0, p1, color, lw=1.6, rad=0.0, ms=14, z=1):
                  shrinkA=2, shrinkB=2, zorder=z))
 
 
-gx0, gy0, gx1, gy1 = 0.485, 0.335, 0.805, 0.85
+gx0, gy0, gx1, gy1 = 0.52, 0.335, 0.84, 0.85
 CY = (gy0 + gy1) / 2
 
 # ---------------------------------------------------------------- 1. TASK card
-tw, th = 0.15, 0.33
-tx, ty = 0.065, CY - th / 2
+tw, th = 0.15, 0.36
+tx, ty = 0.03, CY - th / 2
 rbox(tx, ty, tw, th, "#FFFFFF", BOXEDGE, 1.2, rs=0.013, z=3)
 hh = dy(0.24)
 rbox(tx, ty + th - hh, tw, hh, TEAL, TEAL, 0, rs=0.013, z=4)
 ax.text(tx + tw / 2, ty + th - hh / 2, "LISTING", ha="center", va="center",
-        color="white", fontsize=11.3, fontweight="bold", zorder=5)
+        color="white", fontsize=12.5, fontweight="bold", zorder=5)
 # product photo: the actual work-gloves image, resized into the card (square)
 imh = dy(0.68)
 imw = imh * (AXH / AXW)
@@ -81,11 +81,11 @@ rbox(icx - imw / 2 - fpx, frame_bot, imw + 2 * fpx, imh + 2 * fpy,
 ax.imshow(GLOVE_IMG, extent=[icx - imw / 2, icx + imw / 2, ibot, itop],
           aspect="auto", zorder=5, interpolation="antialiased")
 # listing text (roomy, clear bottom padding)
-tl = [("Work gloves", INK, "bold", 8.2), ("PU-coated · black", MUTE, "normal", 7.4),
-      ("size 10 · 12 pairs", MUTE, "normal", 7.4), ("Brand: AmazonBasics", MUTE, "normal", 7.4)]
-ty0 = frame_bot - dy(0.13)
+tl = [("Work gloves", INK, "bold", 10.5), ("PU-coated · black", MUTE, "normal", 9.5),
+      ("size 10 · 12 pairs", MUTE, "normal", 9.5), ("Brand: AmazonBasics", MUTE, "normal", 9.5)]
+ty0 = frame_bot - dy(0.16)
 for i, (t, col, wt, fs) in enumerate(tl):
-    ax.text(tx + dx(0.2), ty0 - i * dy(0.2), t, ha="left", va="center",
+    ax.text(tx + dx(0.2), ty0 - i * dy(0.24), t, ha="left", va="center",
             color=col, fontsize=fs, fontweight=wt, zorder=8)
 ax.text(tx + tw / 2, ty - 0.036, "A task", ha="center", va="center",
         fontsize=16.7, fontweight="bold", color=INK)
@@ -112,15 +112,15 @@ draw_robot(mcx, my + mh * 0.6)
 ax.text(mcx, my + mh * 0.17, "MODEL", ha="center", va="center", fontsize=15.9,
         fontweight="bold", color=TEAL_D, zorder=5)
 arrow((tx + tw + 0.004, CY), (mx - 0.004, CY), "#9AA1AC", 1.8)
-ax.text((tx + tw + mx) / 2, CY + 0.058, "give it\na task", ha="center", va="center",
-        fontsize=10.2, color=MUTE, linespacing=1.3, zorder=4)
+ax.text((tx + tw + mx) / 2, CY + 0.045, "assign task", ha="center", va="center",
+        fontsize=11.5, color=MUTE, zorder=4)
 
 # ------------------------------------ single clear arrow: model -> group panel
 arrow((mx + mw + 0.004, CY), (gx0 - 0.004, CY), TEAL_D, 2.4, ms=18)
-ax.text((mx + mw + gx0) / 2, CY + 0.062, "N attempts,", ha="center", va="center",
-        fontsize=11.5, color=TEAL_D, fontweight="bold", zorder=4)
+ax.text((mx + mw + gx0) / 2, CY + 0.065, "N attempts,", ha="center", va="center",
+        fontsize=13.0, color=TEAL_D, fontweight="bold", zorder=4)
 ax.text((mx + mw + gx0) / 2, CY + 0.038, "each auto-scored", ha="center",
-        va="center", fontsize=10.2, color=MUTE, zorder=4)
+        va="center", fontsize=11.5, color=MUTE, zorder=4)
 
 # ---------------------------------------------- group panel (attempts + scores)
 rbox(gx0, gy0, gx1 - gx0, gy1 - gy0, "#FCFCFD", BOXEDGE, 1.1, rs=0.015, z=1)
