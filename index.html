@@ -82,8 +82,9 @@
   }
   .topbar .brand {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    font-size: clamp(12px, 1.5vw, 16px); letter-spacing: .1em; text-transform: uppercase;
     color: var(--ink-2); text-decoration: none;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
   }
   .topbar .side { display: flex; align-items: center; gap: 12px; }
   #theme-toggle {
@@ -104,7 +105,9 @@
   .cta-mini:hover { filter: brightness(.94); }
   @media (max-width: 560px) { .cta-mini { display: none; } }
 
-  /* ---------- layout ---------- */
+  /* ---------- layout ----------
+     .col is the body-copy measure; .wide is the default for every figure,
+     chart, and table, so all visuals line up at the same width. */
   .col { max-width: 680px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
   .wide { max-width: 800px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 24px); }
 
@@ -362,17 +365,18 @@
   .cta-panel {
     background: var(--ink); color: var(--paper);
     padding: clamp(32px, 5vw, 52px);
+    border-radius: 12px;
     margin: 64px 0 48px; text-align: center;
   }
-  .cta-panel .kicker { color: var(--paper); }
-  .cta-panel h2 { margin-bottom: 12px; color: inherit; }
+  .cta-panel h2 { margin-bottom: 0; color: inherit; }
   .cta-panel p { max-width: 58ch; color: inherit; opacity: .85; margin-left: auto; margin-right: auto; }
+  .cta-panel > :last-child { margin-bottom: 0; }
   .cta-btn {
-    display: inline-block; margin-top: 18px;
+    display: inline-block; margin-top: 24px;
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     font-size: 14px; letter-spacing: .08em; text-transform: uppercase;
     color: var(--btn-fg); background: var(--btn-bg); text-decoration: none;
-    padding: 15px 26px;
+    padding: 15px 26px; border-radius: 999px;
   }
   .cta-btn:hover { filter: brightness(1.08); }
   .cta-note { font-size: 13.5px; margin-top: 14px; opacity: .6; }
@@ -439,14 +443,14 @@
   <p class="standfirst">
     Why the companies winning in the AI age own their intelligence.
   </p>
-  <p class="byline"><span class="au"><a href="https://www.linkedin.com/in/justinz/">Justinas Zaliaduonis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/jorisbenjaminaszilinskis/">Joris Zilinskis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/fabian-hildesheim/">Fabian Hildesheim</a></span><span class="au"> · <a href="https://www.linkedin.com/in/joel-hainzl/">Joel Hainzl</a></span><span class="au"> · <a href="https://www.linkedin.com/in/gediminaspazera/">Gediminas Pazera</a></span><br>July 23, 2026</p>
+  <p class="byline"><span class="au"><a href="https://www.linkedin.com/in/justinz/">Justinas Zaliaduonis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/jorisbenjaminaszilinskis/">Joris Zilinskis</a></span><span class="au"> · <a href="https://www.linkedin.com/in/fabian-hildesheim/">Fabian Hildesheim</a></span><span class="au"> · <a href="https://www.linkedin.com/in/joel-hainzl/">Joel Hainzl</a></span><span class="au"> · <a href="https://www.linkedin.com/in/gediminaspazera/">Gediminas Pazera</a></span><br>July 27, 2026</p>
 </header>
 
 <article>
   <div class="col">
 
     <section id="how-we-got-here">
-      <p class="kicker">Part I · How we got here</p>
+      <p class="kicker">Part I</p>
       <h2>Everyone asked the same question</h2>
       <p class="lede">
         Since ChatGPT launched in 2022, business leaders have been asking the same question:
@@ -519,7 +523,7 @@
     </section>
 
     <section id="winners">
-      <p class="kicker">Part II · The other side of the divide</p>
+      <p class="kicker">Part II</p>
       <h2>What the winners do differently</h2>
       <p>
         Most of the companies pulling ahead in the AI race made the same discovery: owning your
@@ -672,11 +676,6 @@ specialist model to handle the parts of the workflow that require your internal 
         context engineered frontier models to establish the strongest default baseline. Those frontier traces and learnings are then reused to pack the focused
         capability into a compact model the company owns.
       </p>
-      <p>
-        In the next section we run this playbook ourselves on one of e-commerce's most
-        essential workflows, walk through the numbers at each step, and look at the business
-        value that comes out the other end.
-      </p>
     </section>
 
     <section id="case-study">
@@ -780,7 +779,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="col">
     <section id="methodology">
-      <p class="kicker">Part IV · The experiment</p>
+      <p class="kicker">Part IV</p>
       <h2>A digital twin the model can practice in</h2>
       <p>
         A model can only practice a workflow it can actually perform, fail at, and retry. So we
@@ -803,53 +802,56 @@ specialist model to handle the parts of the workflow that require your internal 
         and wasted tool calls. The penalties encode business priorities directly: a missed
         violation costs 7× more than a false alarm.
       </p>
-      <figure class="viz reveal" id="fig-twin">
-        <p class="viz-title">The digital twin, end to end</p>
-        <div class="plot-wrap">
-          <svg viewBox="0 0 860 330" role="img" aria-label="Diagram of the training environment: a listing flows to the agent, which consults three tools, commits a decision, receives a score, and the reward flows back to the agent. The score is 0.3 times category plus 0.3 times attributes plus 0.4 times policy, minus tool overage.">
-            <defs>
-              <marker id="dg-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
-              </marker>
-              <marker id="dg-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
-              </marker>
-            </defs>
-            <rect x="190" y="16" width="240" height="156" rx="10" fill="none" stroke="var(--rule)" stroke-dasharray="5 5"/>
-            <text x="202" y="34" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;fill:var(--mute);letter-spacing:.08em">TOOLS</text>
-            <rect x="210" y="42" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
-            <rect x="210" y="82" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
-            <rect x="210" y="122" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
-            <text x="310" y="63" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">search_taxonomy()</text>
-            <text x="310" y="103" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">lookup_brand()</text>
-            <text x="310" y="143" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">get_attribute_schema()</text>
-            <line x1="310" y1="176" x2="310" y2="206" stroke="var(--mute)" marker-start="url(#dg-a)" marker-end="url(#dg-a)"/>
-            <rect x="25" y="210" width="125" height="56" rx="8" fill="none" stroke="var(--mute)"/>
-            <rect x="230" y="210" width="160" height="56" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.7"/>
-            <rect x="520" y="210" width="140" height="56" rx="8" fill="none" stroke="var(--mute)"/>
-            <rect x="720" y="210" width="115" height="56" rx="8" fill="none" stroke="var(--mute)"/>
-            <text x="87" y="243" class="row-label" text-anchor="middle">listing</text>
-            <text x="310" y="243" class="row-label" text-anchor="middle">agent</text>
-            <text x="590" y="243" class="row-label" text-anchor="middle">decision</text>
-            <text x="777" y="243" class="row-label" text-anchor="middle">score</text>
-            <line x1="150" y1="238" x2="222" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
-            <line x1="390" y1="238" x2="512" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
-            <line x1="660" y1="238" x2="712" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
-            <path d="M 777 266 L 777 302 L 310 302 L 310 276" fill="none" stroke="var(--accent)" stroke-dasharray="6 5" marker-end="url(#dg-r)"/>
-            <text x="545" y="294" class="annot" text-anchor="middle" style="fill:var(--accent-text)">reward</text>
-            <rect x="565" y="36" width="280" height="58" rx="9" fill="none" stroke="var(--mute)" stroke-dasharray="4 4"/>
-            <text x="705" y="61" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">0.3&#183;category + 0.3&#183;attributes</text>
-            <text x="705" y="81" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">+ 0.4&#183;policy &#8722; tool_overage</text>
-            <line x1="777" y1="206" x2="777" y2="98" stroke="var(--mute)" stroke-dasharray="4 4"/>
-          </svg>
-        </div>
-        <figcaption>
-          Every part of the real workflow has a counterpart in the twin: listings flow in, the
-          agent consults the same tools an analyst would, and a scorer grades each decision.
-          The reward flowing back is what turns practice into learning.
-        </figcaption>
-      </figure>
     </section>
+  </div>
+
+  <div class="wide">
+    <figure class="viz reveal" id="fig-twin">
+      <p class="viz-title">The digital twin, end to end</p>
+      <div class="plot-wrap">
+        <svg viewBox="0 0 860 330" role="img" aria-label="Diagram of the training environment: a listing flows to the agent, which consults three tools, commits a decision, receives a score, and the reward flows back to the agent. The score is 0.3 times category plus 0.3 times attributes plus 0.4 times policy, minus tool overage.">
+          <defs>
+            <marker id="dg-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
+            </marker>
+            <marker id="dg-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+          <rect x="190" y="16" width="240" height="156" rx="10" fill="none" stroke="var(--rule)" stroke-dasharray="5 5"/>
+          <text x="202" y="34" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;fill:var(--mute);letter-spacing:.08em">TOOLS</text>
+          <rect x="210" y="42" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
+          <rect x="210" y="82" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
+          <rect x="210" y="122" width="200" height="32" rx="16" fill="var(--paper-2)" stroke="var(--rule)"/>
+          <text x="310" y="63" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">search_taxonomy()</text>
+          <text x="310" y="103" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">lookup_brand()</text>
+          <text x="310" y="143" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">get_attribute_schema()</text>
+          <line x1="310" y1="176" x2="310" y2="206" stroke="var(--mute)" marker-start="url(#dg-a)" marker-end="url(#dg-a)"/>
+          <rect x="25" y="210" width="125" height="56" rx="8" fill="none" stroke="var(--mute)"/>
+          <rect x="230" y="210" width="160" height="56" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.7"/>
+          <rect x="520" y="210" width="140" height="56" rx="8" fill="none" stroke="var(--mute)"/>
+          <rect x="720" y="210" width="115" height="56" rx="8" fill="none" stroke="var(--mute)"/>
+          <text x="87" y="243" class="row-label" text-anchor="middle">listing</text>
+          <text x="310" y="243" class="row-label" text-anchor="middle">agent</text>
+          <text x="590" y="243" class="row-label" text-anchor="middle">decision</text>
+          <text x="777" y="243" class="row-label" text-anchor="middle">score</text>
+          <line x1="150" y1="238" x2="222" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
+          <line x1="390" y1="238" x2="512" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
+          <line x1="660" y1="238" x2="712" y2="238" stroke="var(--mute)" marker-end="url(#dg-a)"/>
+          <path d="M 777 266 L 777 302 L 310 302 L 310 276" fill="none" stroke="var(--accent)" stroke-dasharray="6 5" marker-end="url(#dg-r)"/>
+          <text x="545" y="294" class="annot" text-anchor="middle" style="fill:var(--accent-text)">reward</text>
+          <rect x="565" y="36" width="280" height="58" rx="9" fill="none" stroke="var(--mute)" stroke-dasharray="4 4"/>
+          <text x="705" y="61" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">0.3&#183;category + 0.3&#183;attributes</text>
+          <text x="705" y="81" text-anchor="middle" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;fill:var(--ink-2)">+ 0.4&#183;policy &#8722; tool_overage</text>
+          <line x1="777" y1="206" x2="777" y2="98" stroke="var(--mute)" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+      <figcaption>
+        Every part of the real workflow has a counterpart in the twin: listings flow in, the
+        agent consults the same tools an analyst would, and a scorer grades each decision.
+        The reward flowing back is what turns practice into learning.
+      </figcaption>
+    </figure>
   </div>
 
   <div class="col">
@@ -896,7 +898,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="col">
     <section id="results">
-      <p class="kicker">Part V · Results</p>
+      <p class="kicker">Part V</p>
       <h2>Training details</h2>
       <p>
         The training setup was modest. We rented two RTX PRO 6000 GPUs, one generating rollouts
@@ -974,7 +976,7 @@ specialist model to handle the parts of the workflow that require your internal 
 
   <div class="col">
     <section id="ownership">
-      <p class="kicker">Part VI · What this buys you</p>
+      <p class="kicker">Part VI</p>
       <h2>What can owning AI do for you?</h2>
       <p>
         Here is the whole experiment in three sentences. We took one high-volume e-commerce
@@ -996,43 +998,51 @@ specialist model to handle the parts of the workflow that require your internal 
         It is just as important to know where this is the wrong tool. Two questions settle
         most cases: how frequently the task runs, and whether its outcome is verifiable.
       </p>
-      <figure class="viz reveal" id="fig-quadrant">
-        <p class="viz-title">Which tool fits which work</p>
-        <div class="plot-wrap">
-          <svg viewBox="0 0 860 470" role="img" aria-label="Quadrant chart. Vertical axis: outcome verifiability, from non-verifiable to verifiable. Horizontal axis: task frequency, from rare to frequent. Verifiable and frequent work fits a fine-tuned specialist; verifiable but rare work fits a prompt-optimized frontier model; non-verifiable rare work fits a frontier model; non-verifiable frequent work fits a frontier model with human review.">
-            <defs>
-              <marker id="qd-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
-              </marker>
-            </defs>
-            <rect x="115" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
-            <rect x="472" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
-            <rect x="115" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
-            <rect x="472" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
-            <text x="287" y="126" class="row-label" text-anchor="middle">prompt-optimized frontier model</text>
-            <text x="644" y="118" class="row-label" text-anchor="middle" style="fill:var(--accent-text);font-weight:600">fine-tuned specialist</text>
-            <text x="644" y="140" class="annot" text-anchor="middle">owned, practiced, cheap at scale</text>
-            <text x="287" y="318" class="row-label" text-anchor="middle">frontier model</text>
-            <text x="644" y="318" class="row-label" text-anchor="middle">frontier model + human review</text>
-            <line x1="95" y1="402" x2="95" y2="38" stroke="var(--mute)" marker-end="url(#qd-a)"/>
-            <text x="88" y="52" class="annot" text-anchor="end">verifiable</text>
-            <text x="88" y="398" class="annot" text-anchor="end">non-verifiable</text>
-            <line x1="115" y1="428" x2="822" y2="428" stroke="var(--mute)" marker-end="url(#qd-a)"/>
-            <text x="115" y="454" class="annot">rare</text>
-            <text x="466" y="454" class="annot" text-anchor="middle">task frequency</text>
-            <text x="817" y="454" class="annot" text-anchor="end">frequent</text>
-          </svg>
-        </div>
-        <figcaption>
-          The upper right is where fine-tuning pays: frequent work with verifiable outcomes.
-          Everything else is better rented: a prompt-optimized frontier model covers
-          verifiable but rare work, and a human stays in the loop where outcomes can't be
-          verified. When
-          the problem is changing facts rather than judgment, retrieval is the fix at any
-          volume. The checklist below condenses the upper-right conditions into something you
-          can hold your own workflows against:
-        </figcaption>
-      </figure>
+    </section>
+  </div>
+
+  <div class="wide">
+    <figure class="viz reveal" id="fig-quadrant">
+      <p class="viz-title">Which tool fits which work</p>
+      <div class="plot-wrap">
+        <svg viewBox="-22 0 882 470" role="img" aria-label="Quadrant chart. Vertical axis: outcome verifiability, from non-verifiable to verifiable. Horizontal axis: task frequency, from rare to frequent. Verifiable and frequent work fits a fine-tuned specialist; verifiable but rare work fits a prompt-optimized frontier model; non-verifiable rare work fits a frontier model; non-verifiable frequent work fits a frontier model with human review.">
+          <defs>
+            <marker id="qd-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="var(--mute)"/>
+            </marker>
+          </defs>
+          <rect x="115" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
+          <rect x="472" y="30" width="345" height="180" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
+          <rect x="115" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
+          <rect x="472" y="222" width="345" height="180" rx="10" fill="none" stroke="var(--mute)"/>
+          <text x="287" y="126" class="row-label" text-anchor="middle">prompt-optimized frontier model</text>
+          <text x="644" y="118" class="row-label" text-anchor="middle" style="fill:var(--accent-text);font-weight:600">fine-tuned specialist</text>
+          <text x="644" y="140" class="annot" text-anchor="middle">owned, practiced, cheap at scale</text>
+          <text x="287" y="318" class="row-label" text-anchor="middle">frontier model</text>
+          <text x="644" y="318" class="row-label" text-anchor="middle">frontier model + human review</text>
+          <line x1="95" y1="402" x2="95" y2="38" stroke="var(--mute)" marker-end="url(#qd-a)"/>
+          <text x="88" y="52" class="annot" text-anchor="end">verifiable</text>
+          <text x="88" y="398" class="annot" text-anchor="end">non-verifiable</text>
+          <line x1="115" y1="428" x2="822" y2="428" stroke="var(--mute)" marker-end="url(#qd-a)"/>
+          <text x="115" y="454" class="annot">rare</text>
+          <text x="466" y="454" class="annot" text-anchor="middle">task frequency</text>
+          <text x="817" y="454" class="annot" text-anchor="end">frequent</text>
+        </svg>
+      </div>
+      <figcaption>
+        The upper right is where fine-tuning pays: frequent work with verifiable outcomes.
+        Everything else is better rented: a prompt-optimized frontier model covers
+        verifiable but rare work, and a human stays in the loop where outcomes can't be
+        verified. When
+        the problem is changing facts rather than judgment, retrieval is the fix at any
+        volume. The checklist below condenses the upper-right conditions into something you
+        can hold your own workflows against:
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <section id="ownership-2">
       <div class="checklist">
         <h3>Your workflow is a fine-tuning candidate if…</h3>
         <ul>
@@ -1061,11 +1071,7 @@ specialist model to handle the parts of the workflow that require your internal 
     </section>
 
     <section class="cta-panel" id="book">
-      <p class="kicker" style="margin-top:0">Work with us</p>
       <h2>See these numbers on your workflow</h2>
-      <p>
-        Need help deploying intelligence in your business?
-      </p>
       <a class="cta-btn" href="https://calendar.app.google/PfVtZUSxGa9iz7CJ9">Book a workflow fit &amp; cost audit</a>
       <p class="cta-note">Want to try the models yourself? They're on <a href="https://huggingface.co/BosonicJustin" style="color:inherit">Hugging Face</a>.</p>
     </section>
