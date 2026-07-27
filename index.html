@@ -131,27 +131,6 @@
     margin: 20px 0 0;
   }
 
-  /* ---------- switch between the two versions of this piece ---------- */
-  .variant-switch {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin: 22px 0 0;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: clamp(10.5px, 2.6vw, 11.5px);
-    letter-spacing: .12em; text-transform: uppercase;
-    color: var(--ink-2); text-decoration: none;
-    border: 1px solid var(--rule); border-radius: 999px;
-    padding: 9px 17px;
-    background: color-mix(in srgb, var(--card) 70%, transparent);
-    transition: border-color .18s ease, color .18s ease;
-  }
-  .variant-switch .arrow { transition: transform .18s ease; }
-  .variant-switch:hover { border-color: var(--teal); color: var(--teal-text); }
-  .variant-switch:hover .arrow { transform: translateX(3px); }
-  .variant-switch:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) {
-    .variant-switch, .variant-switch .arrow { transition: none; }
-    .variant-switch:hover .arrow { transform: none; }
-  }
 
   /* ---------- hero stats ---------- */
   .stat-kicker {
@@ -463,7 +442,6 @@
     What is the common denominator among companies succeeding with AI-first strategies? 
   </p>
   <p class="byline"><span class="au"><a href="https://www.linkedin.com/in/justinz/">Justinas Zaliaduonis</a></span> · <span class="au"><a href="https://www.linkedin.com/in/jorisbenjaminaszilinskis/">Joris Zilinskis</a></span> · <span class="au"><a href="https://www.linkedin.com/in/fabian-hildesheim/">Fabian Hildesheim</a></span> · <span class="au"><a href="https://www.linkedin.com/in/joel-hainzl/">Joel Hainzl</a></span> · <span class="au"><a href="https://www.linkedin.com/in/gediminaspazera/">Gediminas Pazera</a></span><br>July 23, 2026</p>
-  <a class="variant-switch" href="customize.html">Fine-tuned models are often better and cheaper <span class="arrow" aria-hidden="true">&rarr;</span></a>
 </header>
 
 <article>
