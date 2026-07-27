@@ -495,26 +495,34 @@
   <div class="col">
     <section id="mixed-results-2">
       <p>
-        There are many reasons why AI has done wonders for some companies and others have struggled to see the return on their investment, but <a href="https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf">research</a> primarily points in three directions.
+        There are many reasons why AI has done wonders for some companies and others have struggled to see the return on their investment, but <a href="https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf">research</a> primarily points in five directions.
       </p>
 
       <div class="problems">
         <div class="problem"><span class="num">01</span><div>
-          <h4>Achieving business goals within the AI budget</h4>
-          <p>AI brought a pricing model most companies were not used to. Paying per token instead of per seat makes costs scale with usage, which makes it hard to lay out a cost plan or estimate the capital efficiency gains for internal workloads. <a href="https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/">Uber went through its annual engineering budget in four months</a>, and <a href="https://www.buildmvpfast.com/blog/microsoft-cancels-claude-code-licenses-ai-cost-engineer-2026">Microsoft cancelled most of its Claude licenses</a> to bring costs back under control. Today's prices also understate the problem, since most AI labs are <a href="https://www.wsj.com/tech/ai/ai-giants-are-handing-out-tons-of-free-computing-power-to-grab-startup-share-c00a5c5c">subsidizing token costs to capture market share</a>, and frontier model prices are expected to rise.</p>
+          <h4>Redesign the process, not just the task</h4>
+          <p>Becoming AI-first means rethinking how the work is structured, not dropping a model into a workflow built around people: what gets approved, who reviews what, and which handoffs still need a human. Where the process stays untouched, legacy bottlenecks absorb the productivity gains before they reach the P&amp;L. In McKinsey's 2025 survey of organizations using gen AI, workflow redesign was the attribute <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-how-organizations-are-rewiring-to-capture-value">most correlated with EBIT impact</a>, and only 21% of them had redesigned any workflow at all.</p>
         </div></div>
         <div class="problem"><span class="num">02</span><div>
-          <h4>Finding efficient and safe ways to provide business context</h4>
-          <p>Prompt engineering and retrieval can inject business context at call time, but doing it well is its own engineering program: getting to the data, enforcing access controls on what each request may see, building retrieval that surfaces the right evidence, and <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">managing a context window</a> that models <a href="https://arxiv.org/abs/2307.03172">use unevenly as it grows</a> creates significant engineering and organizational challenges.</p>
+          <h4>Incentivize experimentation</h4>
+          <p>Models, tooling and best practices change weekly, so last quarter's setup is rarely still the right one. That only gets picked up if people are rewarded for trying things and reporting what failed, not just for shipping. Technical teams are the natural place to start, since they see the same problems recur across functions and can tell which of them a model can actually take over.</p>
         </div></div>
         <div class="problem"><span class="num">03</span><div>
-          <h4>Measuring impact and justifying the investment</h4>
+          <h4>Provide tailored business context</h4>
+          <p>Prompt engineering and retrieval can inject business context at call time, but doing it well is its own engineering program: getting to the data, enforcing access controls on what each request may see, building retrieval that surfaces the right evidence, and <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">managing a context window</a> that models <a href="https://arxiv.org/abs/2307.03172">use unevenly as it grows</a> creates significant engineering and organizational challenges.</p>
+        </div></div>
+        <div class="problem"><span class="num">04</span><div>
+          <h4>Measure usage and impact</h4>
           <p>Every AI line item eventually meets the CFO question: what did this change, and was it worth it? In most deployments, nobody can answer it: there is no infrastructure to track how often the model's performance, decision costs, or impacts on efficiency, and <a href="https://metr.org/blog/2026-05-11-ai-usage-survey/">self-reported time savings are often inaccurate</a>. Without a scored evaluation on your own data, "vibe evaluations" is the ceiling of what you can claim, and a hard budget to defend.</p>
+        </div></div>
+        <div class="problem"><span class="num">05</span><div>
+          <h4>Set clear business goals within the AI budget</h4>
+          <p>AI brought a pricing model most companies were not used to. Paying per token instead of per seat makes costs scale with usage, which makes it hard to lay out a cost plan or estimate the capital efficiency gains for internal workloads. <a href="https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/">Uber went through its annual engineering budget in four months</a>, and <a href="https://www.buildmvpfast.com/blog/microsoft-cancels-claude-code-licenses-ai-cost-engineer-2026">Microsoft cancelled most of its Claude licenses</a> to bring costs back under control. Today's prices also understate the problem, since most AI labs are <a href="https://www.wsj.com/tech/ai/ai-giants-are-handing-out-tons-of-free-computing-power-to-grab-startup-share-c00a5c5c">subsidizing token costs to capture market share</a>, and frontier model prices are expected to rise.</p>
         </div></div>
       </div>
       <p>
         In this article we give a detailed overview of the deployment technique the winning group keeps converging on: fine-tuning open-source models with reinforcement learning.
-        We cover how it addresses all three challenges above, and how it turns knowledge only your organization has (namely data, tools, and processes) into a model no vendor API can match at a fraction of the cost.
+        We cover how it addresses the last three challenges above, and how it turns knowledge only your organization has (namely data, tools, and processes) into a model no vendor API can match at a fraction of the cost.
       </p>
     </section>
 
