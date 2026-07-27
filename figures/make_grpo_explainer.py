@@ -112,15 +112,15 @@ draw_robot(mcx, my + mh * 0.6)
 ax.text(mcx, my + mh * 0.17, "MODEL", ha="center", va="center", fontsize=15.9,
         fontweight="bold", color=TEAL_D, zorder=5)
 arrow((tx + tw + 0.004, CY), (mx - 0.004, CY), "#9AA1AC", 1.8)
-ax.text((tx + tw + mx) / 2, CY + 0.05, "give it\na task", ha="center", va="center",
-        fontsize=11.9, color=MUTE, linespacing=1.35, zorder=4)
+ax.text((tx + tw + mx) / 2, CY + 0.058, "give it\na task", ha="center", va="center",
+        fontsize=10.2, color=MUTE, linespacing=1.3, zorder=4)
 
 # ------------------------------------ single clear arrow: model -> group panel
 arrow((mx + mw + 0.004, CY), (gx0 - 0.004, CY), TEAL_D, 2.4, ms=18)
-ax.text((mx + mw + gx0) / 2, CY + 0.048, "N attempts,", ha="center", va="center",
-        fontsize=13.0, color=TEAL_D, fontweight="bold", zorder=4)
-ax.text((mx + mw + gx0) / 2, CY + 0.024, "each auto-scored", ha="center",
-        va="center", fontsize=12.5, color=MUTE, zorder=4)
+ax.text((mx + mw + gx0) / 2, CY + 0.062, "N attempts,", ha="center", va="center",
+        fontsize=11.5, color=TEAL_D, fontweight="bold", zorder=4)
+ax.text((mx + mw + gx0) / 2, CY + 0.038, "each auto-scored", ha="center",
+        va="center", fontsize=10.2, color=MUTE, zorder=4)
 
 # ---------------------------------------------- group panel (attempts + scores)
 rbox(gx0, gy0, gx1 - gx0, gy1 - gy0, "#FCFCFD", BOXEDGE, 1.1, rs=0.015, z=1)
@@ -150,7 +150,7 @@ for s, y in zip(scores, ys):
 avg_y = (ys[2] + ys[3]) / 2 + ticket_h / 2
 ax.plot([ticket_x - 0.006, gx1 - 0.012], [avg_y, avg_y], ls=(0, (4, 3)),
         color=INK, lw=1.3, zorder=6)
-ax.text(gx1 - 0.012, avg_y - 0.016, "group average", ha="right", va="top",
+ax.text(gx1 + 0.024, avg_y, "group average", ha="left", va="center",
         fontsize=11.6, color=INK, zorder=6)
 
 rx = gx1 + 0.024
