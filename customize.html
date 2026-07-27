@@ -59,23 +59,6 @@
   }
   .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
 
-  /* ---------- page background wash ---------- */
-  /* Fixed, heavily dimmed hero photo behind the whole page. Sits above the html
-     background but below every element, so body text contrast is unchanged.
-     Inset is negative so the blur does not feather in from the viewport edges. */
-  body::before {
-    content: "";
-    position: fixed; inset: -12px; z-index: -1;
-    background: url("figures/assets/hero_superintelligence.jpg") center / cover no-repeat;
-    filter: blur(7px) saturate(.5);
-    opacity: .045;
-    pointer-events: none;
-  }
-  :root[data-theme="dark"] body::before {
-    filter: blur(7px) saturate(.45) brightness(.8);
-    opacity: .11;
-  }
-  @media print { body::before { display: none; } }
 
   /* ---------- top bar ---------- */
   .topbar {
@@ -115,21 +98,6 @@
   .col { max-width: 680px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
   .wide { max-width: 800px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 24px); }
 
-  /* ---------- hero image ---------- */
-  .hero-figure { position: relative; margin: 0; }
-  .hero-figure img {
-    display: block; width: 100%; height: auto;
-    aspect-ratio: 16 / 6.2;
-    object-fit: cover;
-    object-position: 50% 40%;
-  }
-  /* Fade the photo into the paper so the headline below reads as one block. */
-  .hero-figure::after {
-    content: ""; position: absolute; inset: auto 0 -1px 0; height: 40%;
-    background: linear-gradient(to bottom, transparent, var(--paper) 92%);
-    pointer-events: none;
-  }
-  @media (max-width: 700px) { .hero-figure img { aspect-ratio: 4 / 3; } }
 
   /* ---------- hero ---------- */
   header.hero { padding: clamp(24px, 4.5vh, 48px) 0 8px; text-align: center; }
@@ -488,11 +456,6 @@
   </div>
 </nav>
 
-<figure class="hero-figure">
-  <img src="figures/assets/hero_superintelligence.jpg"
-       width="1536" height="1024" fetchpriority="high"
-       alt="A man looks upward while a glowing blue network of nodes and connections spreads out from his head into the dark around him.">
-</figure>
 
 <header class="hero wide" id="top">
   <h1>Fine-tuned models are often better and cheaper, than you might think</h1>
