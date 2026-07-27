@@ -87,10 +87,8 @@ ty0 = frame_bot - dy(0.16)
 for i, (t, col, wt, fs) in enumerate(tl):
     ax.text(tx + dx(0.2), ty0 - i * dy(0.24), t, ha="left", va="center",
             color=col, fontsize=fs, fontweight=wt, zorder=8)
-ax.text(tx + tw / 2, ty - 0.036, "A task", ha="center", va="center",
+ax.text(tx + tw / 2, ty - 0.045, "Catalog item", ha="center", va="center",
         fontsize=16.7, fontweight="bold", color=INK)
-ax.text(tx + tw / 2, ty - 0.068, "one product listing", ha="center", va="center",
-        fontsize=12.8, color=MUTE)
 
 # ---------------------------------------------------------------- 2. ROBOT model
 mw, mh = 0.118, 0.25
